@@ -50,4 +50,20 @@ public class Manager extends User {
 	public void setProjects(List<Project> projects) {
 		this.projects = projects;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (!(obj instanceof Manager)) return false;
+
+        if (this.getId() == ((Manager)obj).getId()) {
+            return true;
+        } else {
+            return false;
+        }
+	}
+
 }
