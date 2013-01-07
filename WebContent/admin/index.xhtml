@@ -14,40 +14,40 @@
 					<p:button value="Add Employee" href="/admin/addEmployee.xhtml"></p:button>
 				</p>
 				<h:form prependId="false">
-				
+
 				    <p:dataTable id="dataTable" var="user" value="#{userControl.users}">
 				        <f:facet name="header">
 				            Users
 				        </f:facet>
-				
+
 				        <p:column>
 				            <f:facet name="header">
 				                <h:outputText value="Username" />
 				            </f:facet>
 				            <h:outputText value="#{user.username}" />
 				        </p:column>
-				
+
 				        <p:column>
 				            <f:facet name="header">
 				                <h:outputText value="First Name" />
 				            </f:facet>
 				            <h:outputText value="#{user.name}" />
 				        </p:column>
-				
+
 				        <p:column>
 				            <f:facet name="header">
 				                <h:outputText value="Last name" />
 				            </f:facet>
 				            <h:outputText value="#{user.surname}" />
 				        </p:column>
-				
+
 				        <p:column>
 				            <f:facet name="header">
 				                <h:outputText value="Position" />
 				            </f:facet>
 				            <h:outputText value="#{user.position}" />
 				        </p:column>
-				
+
 				        <p:column>
 				            <f:facet name="header">
 				                <h:outputText value="Roles" />
@@ -55,7 +55,7 @@
 				            <h:outputText value="#{user.role.type}" />
 				        </p:column>
 				    </p:dataTable>
-				
+
 				</h:form>
 			</ui:define>
 		</ui:composition>

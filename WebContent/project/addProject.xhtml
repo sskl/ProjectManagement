@@ -15,7 +15,7 @@
 					<h:panelGrid columns="2">
 						<p:outputLabel id="nameLabel" for="name">Project Name</p:outputLabel>
 						<p:inputText id="name" value="#{projectControl.newProject.name}" required="true"></p:inputText>
-							
+
 						<p:outputLabel id="managerLabel" for="manager">Manager</p:outputLabel>
 						<p:selectOneMenu id="manager" value="#{projectControl.newProject.manager}" converter="manager" effect="fade">
 					        <f:selectItem itemLabel="Select One" itemValue="" />
@@ -28,4 +28,3 @@
 		</ui:composition>
 	</h:body>
 </html>
-
