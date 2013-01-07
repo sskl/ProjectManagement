@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<h:body>
+		<ui:composition template="../template/layout.xhtml">
+			<ui:define name="content">
+				<p>
+					<p:button value="Add Admin" href="/admin/addAdmin.xhtml"></p:button>
+					<p:button value="Add Manager" href="/admin/addManager.xhtml"></p:button>
+					<p:button value="Add Employee" href="/admin/addEmployee.xhtml"></p:button>
+				</p>
+				<h:form prependId="false">
+				
+				    <p:dataTable id="dataTable" var="user" value="#{userControl.users}">
+				        <f:facet name="header">
+				            Users
+				        </f:facet>
+				
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Username" />
+				            </f:facet>
+				            <h:outputText value="#{user.username}" />
+				        </p:column>
+				
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="First Name" />
+				            </f:facet>
+				            <h:outputText value="#{user.name}" />
+				        </p:column>
+				
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Last name" />
+				            </f:facet>
+				            <h:outputText value="#{user.surname}" />
+				        </p:column>
+				
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Position" />
+				            </f:facet>
+				            <h:outputText value="#{user.position}" />
+				        </p:column>
+				
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Roles" />
+				            </f:facet>
+				            <h:outputText value="#{user.role.type}" />
+				        </p:column>
+				    </p:dataTable>
+				
+				</h:form>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+</html>

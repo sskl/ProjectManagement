@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<h:body>
+		<ui:composition>
+			<h2>Project Management System</h2>
+			<p:tabMenu activeIndex="#{mainControl.activePage}" rendered="#{userControl.userLogged}">
+			    <p:menuitem value="Project" url="/project/index.xhtml" icon="ui-icon-star" rendered="#{userControl.userRoleManager || userControl.userRoleAdmin}"/>
+			    <p:menuitem value="Task" url="/project/task.xhtml" icon="ui-icon-document"/>
+			    <p:menuitem value="Admin" url="/admin/index.xhtml" icon="ui-icon-person" rendered="#{userControl.userRoleAdmin}" />
+			</p:tabMenu>
+	    </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<h:body>
+		<ui:composition template="../template/layout.xhtml">
+			<ui:define name="content">
+				<h:form id="addEmployeeForm">
+					<p:outputPanel id="wrapper">
+						<p:messages id="addEmployeeMessage" autoUpdate="true" closable="true"></p:messages>
+					</p:outputPanel>
+					<h:panelGrid columns="2">
+						<p:outputLabel id="usernameLabel" for="username">Username</p:outputLabel>
+						<p:inputText id="username" value="#{userControl.newEmployee.username}" required="true"></p:inputText>
+
+						<p:outputLabel id="nameLabel" for="name">First Name</p:outputLabel>
+						<p:inputText id="name" value="#{userControl.newEmployee.name}" required="true"></p:inputText>
+
+						<p:outputLabel id="surnameLabel" for="surname">Last Name</p:outputLabel>
+						<p:inputText id="surname" value="#{userControl.newEmployee.surname}" required="true"></p:inputText>
+
+						<p:outputLabel id="positionLabel" for="position">Position</p:outputLabel>
+						<p:inputText id="position" value="#{userControl.newEmployee.position}" required="true"></p:inputText>
+						
+						<p:outputLabel id="managerLabel" for="manager">Manager</p:outputLabel>
+						<p:selectOneMenu id="manager" value="#{userControl.newEmployee.manager}" converter="manager" effect="fade">
+				            <f:selectItem itemLabel="Select One" itemValue="" />
+				            <f:selectItems value="#{userControl.managers}" var="manager" itemLabel="#{manager.name} #{manager.surname}" itemValue="#{manager}"/>
+				        </p:selectOneMenu>
+					</h:panelGrid><br />
+					<p:commandButton id="addEmployeeButton" value="Save" action="#{userControl.saveNewEmployee()}" update="wrapper"></p:commandButton>
+				</h:form>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+</html>
+

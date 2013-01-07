@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+    version="2.0">
+	<converter>
+		<display-name>manager</display-name>
+		<converter-id>manager</converter-id>
+		<converter-class>tr.edu.ankara.blm489.converters.ManagerConverter</converter-class>
+	</converter>
+	<managed-bean>
+		<description>Main Controller</description>
+		<managed-bean-name>mainControl</managed-bean-name>
+		<managed-bean-class>tr.edu.ankara.blm489.controls.MainControl</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>Main Project Controller</description>
+		<managed-bean-name>projectControl</managed-bean-name>
+		<managed-bean-class>tr.edu.ankara.blm489.controls.ProjectControl</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>Main User Controller</description>
+		<managed-bean-name>userControl</managed-bean-name>
+		<managed-bean-class>tr.edu.ankara.blm489.controls.UserControl</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+</faces-config>
