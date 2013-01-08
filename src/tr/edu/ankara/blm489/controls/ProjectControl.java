@@ -67,11 +67,10 @@ public class ProjectControl extends MainControl {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
 	        context.addMessage(null, message);
 	        return null;
+		} finally {
+	        entityManager.close();
 		}
-        entityManager.close();
+
 		return "/project/index.xhtml";
 	}
-
-	
-	
 }

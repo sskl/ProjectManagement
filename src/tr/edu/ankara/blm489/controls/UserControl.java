@@ -71,8 +71,9 @@ public class UserControl extends MainControl {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
 	        context.addMessage(null, message);
 	        return null;
+		} finally {
+	        entityManager.close();
 		}
-        entityManager.close();
         
         newAdmin = null;
 		return "/admin/index.xhtml";
@@ -94,8 +95,10 @@ public class UserControl extends MainControl {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
 	        context.addMessage(null, message);
 	        return null;
+		} finally {
+	        entityManager.close();
 		}
-        entityManager.close();
+
 		return "/admin/index.xhtml";
 	}
 	
@@ -115,8 +118,10 @@ public class UserControl extends MainControl {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
 	        context.addMessage(null, message);
 	        return null;
+		} finally {
+	        entityManager.close();
 		}
-        entityManager.close();
+
 		return "/admin/index.xhtml";
 	}
 	
