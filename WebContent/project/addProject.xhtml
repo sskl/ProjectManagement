@@ -18,7 +18,6 @@
 
 						<p:outputLabel id="managerLabel" for="manager">Manager</p:outputLabel>
 						<p:selectOneMenu id="manager" value="#{projectControl.newProject.manager}" converter="manager" effect="fade">
-					        <f:selectItem itemLabel="Select One" itemValue="" />
 					        <f:selectItems value="#{userControl.managers}" var="manager" itemLabel="#{manager.name} #{manager.surname}" itemValue="#{manager}"/>
 					    </p:selectOneMenu>
 					</h:panelGrid><br />
