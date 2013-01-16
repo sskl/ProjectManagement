@@ -13,7 +13,7 @@
 				</p>
 				<h:form prependId="false">
 
-				   <p:dataTable id="dataTable" var="project" value="#{projectControl.projects}">
+				   <p:dataTable id="dataTable" var="project" value="#{projectControl.projects}" rowKey="#{project.id}" selection="#{projectControl.selectedProjects}" selectionMode="multiple">
 				   <f:facet name="header">
 				            Projects
 				        </f:facet>
@@ -29,6 +29,12 @@
 				            </f:facet>
 				            <h:outputText value="#{project.manager.name} #{project.manager.surname}" />
 				        </p:column>
+				        <f:facet name="footer">
+				        	<p:outputPanel id="wrapper">
+								<p:messages id="addProjectMessage"></p:messages>
+							</p:outputPanel>  
+            				<p:commandButton id="deleteProjectButton" value="Delete" action="#{projectControl.deleteSelectedProjects()}" update="wrapper,dataTable"></p:commandButton>
+       					</f:facet>
 				   </p:dataTable>
 
 				</h:form>   

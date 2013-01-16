@@ -8,6 +8,9 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+
+import org.hibernate.Session;
+
 import tr.edu.ankara.blm489.models.Project;
 
 /**
@@ -20,6 +23,7 @@ public class ProjectControl extends MainControl {
 	//private Manager manager;
 	private List<Project> projects;
 	private Project newProject = new Project();
+	private Project[] selectedProjects; 
 
 	/**
 	 * @return the projects
@@ -68,7 +72,37 @@ public class ProjectControl extends MainControl {
 	        context.addMessage(null, message);
 	        return null;
 		} finally {
-	        entityManager.close();
+			entityManager.close();
+			newProject = new Project();
+		}
+
+		return "/project/index.xhtml";
+	}
+
+	public Project[] getSelectedProjects() {
+		return selectedProjects;
+	}
+
+	public void setSelectedProjects(Project[] selectedProjects) {
+		this.selectedProjects = selectedProjects;
+	}
+	
+	public String deleteSelectedProjects() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		EntityManager entityManager = emf.createEntityManager();
+
+		try {
+			//System.out.println(newProject.getManager().getName());
+			entityManager.getTransaction().begin();
+			for(Project itr : selectedProjects) {
+				itr = entityManager.merge(itr);
+				entityManager.remove(itr);
+			}
+	        entityManager.getTransaction().commit();	
+		} catch (Exception e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
+	        context.addMessage(null, message);
+	        return null;
 		}
 
 		return "/project/index.xhtml";
