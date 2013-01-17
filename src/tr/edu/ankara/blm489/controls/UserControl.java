@@ -29,9 +29,11 @@ public class UserControl extends MainControl {
 	private User loggedUser = null;
 	private User newAdmin = new Admin();
 	private Manager newManager;
+	private Manager selectedManager = new Manager();
 	private Employee newEmployee = new Employee();
 	private List<User> users;
 	private List<Manager> managers;
+	private List<Employee> selectedTeam;
 
 	public String login() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -255,6 +257,25 @@ public class UserControl extends MainControl {
 	 */
 	public void setManagers(List<Manager> managers) {
 		this.managers = managers;
+	}
+
+	public List<Employee> getSelectedTeam() {
+		return selectedTeam;
+	}
+
+	public void setSelectedTeam(List<Employee> selectedTeam) {
+		this.selectedTeam = selectedTeam;
+	}
+	public void updateSelectedTeam() {
+		System.out.println("Hi!");
+	}
+
+	public Manager getSelectedManager() {
+		return selectedManager;
+	}
+
+	public void setSelectedManager(Manager selectedManager) {
+		this.selectedManager = selectedManager;
 	}
 
 }
