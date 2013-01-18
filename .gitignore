@@ -16,3 +16,5 @@ Oracle/**/*
 Oracle/*
 PrimeFaces/**/*
 PrimeFaces/*
+WebContent/WEB-INF/lib/**/*
+WebContent/WEB-INF/lib/*
