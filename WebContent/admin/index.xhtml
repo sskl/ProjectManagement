@@ -15,7 +15,7 @@
 				</p>
 				<h:form prependId="false">
 
-				    <p:dataTable id="AdminDataTable" var="admin" value="#{userControl.admins}" rowKey="#{admin.id}" selection="#{userControl.selectedUsers}" selectionMode="multiple">
+				    <p:dataTable id="AdminDataTable" var="admin" value="#{userControl.admins}" rowKey="#{admin.id}" selection="#{userControl.selectedAdmins}" selectionMode="multiple">
 				        <f:facet name="header">
 				            Admins
 				        </f:facet>
@@ -59,12 +59,12 @@
 				        	<p:outputPanel id="AdminWrapper">
 								<p:messages id="AdminMessage"></p:messages>
 							</p:outputPanel>  
-            				<p:commandButton id="deleteAdminButton" value="Delete" action="#{userControl.deleteSelectedUsers()}" update="AdminWrapper, AdminDataTable"></p:commandButton>
-            				<p:commandButton id="editAdminButton" value="Edit" action="#{userControl.selectionControl()}" update="AdminWrapper, AdminDataTable"></p:commandButton>
+            				<p:commandButton id="deleteAdminButton" value="Delete" action="#{userControl.deleteSelectedAdmins()}" update="AdminWrapper, AdminDataTable"></p:commandButton>
+            				<p:commandButton id="editAdminButton" value="Edit" action="#{userControl.controlSelectedAdmins()}" update="AdminWrapper, AdminDataTable"></p:commandButton>
        					</f:facet>
 				    </p:dataTable>
 					<br /><br />
-				    <p:dataTable id="ManagerDataTable" var="manager" value="#{userControl.managers}" rowKey="#{manager.id}" selection="#{userControl.selectedUsers}" selectionMode="multiple">
+				    <p:dataTable id="ManagerDataTable" var="manager" value="#{userControl.managers}" rowKey="#{manager.id}" selection="#{userControl.selectedManagers}" selectionMode="multiple">
 				        <f:facet name="header">
 				            Managers
 				        </f:facet>
@@ -108,12 +108,12 @@
 				        	<p:outputPanel id="ManagerWrapper">
 								<p:messages id="ManagerMessage"></p:messages>
 							</p:outputPanel>  
-            				<p:commandButton id="deleteManagerButton" value="Delete" action="#{userControl.deleteSelectedUsers()}" update="ManagerWrapper, ManagerDataTable"></p:commandButton>
-            				<p:commandButton id="editManagerButton" value="Edit" action="#{userControl.selectionControl()}" update="ManagerWrapper, ManagerDataTable"></p:commandButton>
+            				<p:commandButton id="deleteManagerButton" value="Delete" action="#{userControl.deleteSelectedManagers()}" update="ManagerWrapper, ManagerDataTable"></p:commandButton>
+            				<p:commandButton id="editManagerButton" value="Edit" action="#{userControl.controlSelectedManagers()}" update="ManagerWrapper, ManagerDataTable"></p:commandButton>
        					</f:facet>
 				    </p:dataTable>
 					<br /><br />
-				    <p:dataTable id="EmployeeDataTable" var="employee" value="#{userControl.employees}" rowKey="#{employee.id}" selection="#{userControl.selectedUsers}" selectionMode="multiple">
+				    <p:dataTable id="EmployeeDataTable" var="employee" value="#{userControl.employees}" rowKey="#{employee.id}" selection="#{userControl.selectedEmployees}" selectionMode="multiple">
 				        <f:facet name="header">
 				            Employees
 				        </f:facet>
@@ -164,8 +164,8 @@
 				        	<p:outputPanel id="EmployeeWrapper">
 								<p:messages id="EmployeeMessage"></p:messages>
 							</p:outputPanel>  
-            				<p:commandButton id="deleteEmployeeButton" value="Delete" action="#{userControl.deleteSelectedUsers()}" update="EmployeeWrapper, EmployeeDataTable"></p:commandButton>
-            				<p:commandButton id="editEmployeeButton" value="Edit" action="#{userControl.selectionControl()}" update="EmployeeWrapper, EmployeeDataTable"></p:commandButton>
+            				<p:commandButton id="deleteEmployeeButton" value="Delete" action="#{userControl.deleteSelectedEmployees()}" update="EmployeeWrapper, EmployeeDataTable"></p:commandButton>
+            				<p:commandButton id="editEmployeeButton" value="Edit" action="#{userControl.controlSelectedEmployees()}" update="EmployeeWrapper, EmployeeDataTable"></p:commandButton>
        					</f:facet>
 				    </p:dataTable>
 				</h:form>

@@ -35,14 +35,15 @@ public class UserControl extends MainControl {
 	private List<Manager> managers;
 	private List<Employee> employees;
 	private List<Employee> selectedTeam;
-	private User[] selectedUsers;
+	private Admin[] selectedAdmins;
+	private Manager[] selectedManagers;
+	private Employee[] selectedEmployees;
 
 	public String login() {
         FacesContext context = FacesContext.getCurrentInstance();
 		EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
 		Session session = entityManager.unwrap(Session.class);
-		//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("username", this.username));
         loggedUser = (User) criteria.uniqueResult();
@@ -129,13 +130,13 @@ public class UserControl extends MainControl {
 		return "/admin/index.xhtml";
 	}
 
-	public String deleteSelectedUsers() {
+	public String deleteSelectedAdmins() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
 			entityManager.getTransaction().begin();
-			for(User itr : selectedUsers) {
+			for(Admin itr : selectedAdmins) {
 				itr = entityManager.merge(itr);
 				entityManager.remove(itr);
 			}
@@ -146,26 +147,87 @@ public class UserControl extends MainControl {
 	        return null;
 		}
 
-		return "/user/index.xhtml";
+		return "/admin/index.xhtml";
 	}
-	
-	public String selectionControl() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		if (selectedUsers.length > 1) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please select only one row to edit!", "");
-	        context.addMessage(null, message);
-	        return null;
-		}
-		return "/user/editUser.xhtml"; 
-	}
-	
-	public String editSelectedUser() {
+
+	public String deleteSelectedManagers() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
 			entityManager.getTransaction().begin();
-			User merged = entityManager.merge(selectedUsers[0]);
+			for(Manager itr : selectedManagers) {
+				itr = entityManager.merge(itr);
+				entityManager.remove(itr);
+			}
+	        entityManager.getTransaction().commit();	
+		} catch (Exception e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
+	        context.addMessage(null, message);
+	        return null;
+		}
+
+		return "/admin/index.xhtml";
+	}
+
+	public String deleteSelectedEmployees() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		EntityManager entityManager = emf.createEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+			for(Employee  itr : selectedEmployees) {
+				itr = entityManager.merge(itr);
+				entityManager.remove(itr);
+			}
+	        entityManager.getTransaction().commit();	
+		} catch (Exception e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
+	        context.addMessage(null, message);
+	        return null;
+		}
+
+		return "/admin/index.xhtml";
+	}
+	
+	public String controlSelectedAdmins() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		if (selectedAdmins.length > 1) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please select only one row to edit!", "");
+	        context.addMessage(null, message);
+	        return null;
+		}
+		System.out.println(selectedAdmins.length);
+		return "/admin/editAdmin.xhtml"; 
+	}
+	
+	public String controlSelectedManagers() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		if (selectedManagers.length > 1) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please select only one row to edit!", "");
+	        context.addMessage(null, message);
+	        return null;
+		}
+		return "/admin/editManager.xhtml"; 
+	}
+	
+	public String controlSelectedEmployees() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		if (selectedEmployees.length > 1) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please select only one row to edit!", "");
+	        context.addMessage(null, message);
+	        return null;
+		}
+		return "/admin/editEmployee.xhtml"; 
+	}
+	
+	public String editSelectedAdmin() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		EntityManager entityManager = emf.createEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+			Admin merged = entityManager.merge(selectedAdmins[0]);
 			entityManager.persist(merged);
 	        entityManager.getTransaction().commit();	
 		} catch (Exception e) {
@@ -174,7 +236,43 @@ public class UserControl extends MainControl {
 	        return null;
 		}
 
-		return "/user/index.xhtml";
+		return "/admin/index.xhtml";
+	}
+	
+	public String editSelectedManager() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		EntityManager entityManager = emf.createEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+			Manager merged = entityManager.merge(selectedManagers[0]);
+			entityManager.persist(merged);
+	        entityManager.getTransaction().commit();	
+		} catch (Exception e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
+	        context.addMessage(null, message);
+	        return null;
+		}
+
+		return "/admin/index.xhtml";
+	}
+	
+	public String editSelectedEmployee() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		EntityManager entityManager = emf.createEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+			Employee merged = entityManager.merge(selectedEmployees[0]);
+			entityManager.persist(merged);
+	        entityManager.getTransaction().commit();	
+		} catch (Exception e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
+	        context.addMessage(null, message);
+	        return null;
+		}
+
+		return "/admin/index.xhtml";
 	}
 
 	public void updateSelectedTeam() {
@@ -365,16 +463,44 @@ public class UserControl extends MainControl {
 	}
 
 	/**
-	 * @return the selectedUsers
+	 * @return the selectedAdmins
 	 */
-	public User[] getSelectedUsers() {
-		return selectedUsers;
+	public Admin[] getSelectedAdmins() {
+		return selectedAdmins;
 	}
 
 	/**
-	 * @param selectedUsers the selectedUsers to set
+	 * @param selectedAdmins the selectedAdmins to set
 	 */
-	public void setSelectedUsers(User[] selectedUsers) {
-		this.selectedUsers = selectedUsers;
+	public void setSelectedAdmins(Admin[] selectedAdmins) {
+		this.selectedAdmins = selectedAdmins;
+	}
+
+	/**
+	 * @return the selectedManagers
+	 */
+	public Manager[] getSelectedManagers() {
+		return selectedManagers;
+	}
+
+	/**
+	 * @param selectedManagers the selectedManagers to set
+	 */
+	public void setSelectedManagers(Manager[] selectedManagers) {
+		this.selectedManagers = selectedManagers;
+	}
+
+	/**
+	 * @return the selectedEmployees
+	 */
+	public Employee [] getSelectedEmployees() {
+		return selectedEmployees;
+	}
+
+	/**
+	 * @param selectedEmployees the selectedEmployees to set
+	 */
+	public void setSelectedEmployees(Employee [] selectedEmployees) {
+		this.selectedEmployees = selectedEmployees;
 	}
 }
