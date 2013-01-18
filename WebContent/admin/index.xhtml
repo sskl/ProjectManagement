@@ -54,6 +54,15 @@
 				            </f:facet>
 				            <h:outputText value="#{user.role.type}" />
 				        </p:column>
+
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Action" />
+				            </f:facet>
+				            <p:commandButton id="delete" actionListener="#{userControl.deleteUser()}" image="icon icon-delete" value="Delete">
+				            	<f:setPropertyActionListener target="#{userControl.selectedUser}" value="#{user}" for="delete" />
+				            </p:commandButton>
+				        </p:column>
 				    </p:dataTable>
 
 				</h:form>
