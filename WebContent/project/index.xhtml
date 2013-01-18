@@ -14,21 +14,24 @@
 				<h:form prependId="false">
 
 				   <p:dataTable id="dataTable" var="project" value="#{projectControl.projects}" rowKey="#{project.id}" selection="#{projectControl.selectedProjects}" selectionMode="multiple">
-				   <f:facet name="header">
+				   		<f:facet name="header">
 				            Projects
 				        </f:facet>
+
 				        <p:column>
 				            <f:facet name="header">
 				                <h:outputText value="Project Name" />
 				            </f:facet>
 				            <h:outputText value="#{project.name}" />
 				        </p:column>
+
 				        <p:column>
 				            <f:facet name="header">
 				                <h:outputText value="Manager" />
 				            </f:facet>
 				            <h:outputText value="#{project.manager.name} #{project.manager.surname}" />
 				        </p:column>
+
 				        <f:facet name="footer">
 				        	<p:outputPanel id="wrapper">
 								<p:messages id="addProjectMessage"></p:messages>

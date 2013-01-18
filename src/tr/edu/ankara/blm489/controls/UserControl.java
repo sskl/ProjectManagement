@@ -31,9 +31,11 @@ public class UserControl extends MainControl {
 	private Manager newManager = new Manager();
 	private Employee newEmployee = new Employee();
 	private Manager selectedManager = new Manager();
-	private List<User> users;
+	private List<Admin> admins;
 	private List<Manager> managers;
+	private List<Employee> employees;
 	private List<Employee> selectedTeam;
+	private User[] selectedUsers;
 
 	public String login() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -127,6 +129,54 @@ public class UserControl extends MainControl {
 		return "/admin/index.xhtml";
 	}
 
+	public String deleteSelectedUsers() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		EntityManager entityManager = emf.createEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+			for(User itr : selectedUsers) {
+				itr = entityManager.merge(itr);
+				entityManager.remove(itr);
+			}
+	        entityManager.getTransaction().commit();	
+		} catch (Exception e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
+	        context.addMessage(null, message);
+	        return null;
+		}
+
+		return "/user/index.xhtml";
+	}
+	
+	public String selectionControl() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		if (selectedUsers.length > 1) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please select only one row to edit!", "");
+	        context.addMessage(null, message);
+	        return null;
+		}
+		return "/user/editUser.xhtml"; 
+	}
+	
+	public String editSelectedUser() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		EntityManager entityManager = emf.createEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+			User merged = entityManager.merge(selectedUsers[0]);
+			entityManager.persist(merged);
+	        entityManager.getTransaction().commit();	
+		} catch (Exception e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
+	        context.addMessage(null, message);
+	        return null;
+		}
+
+		return "/user/index.xhtml";
+	}
+
 	public void updateSelectedTeam() {
 		System.out.println("Hi!");
 	}
@@ -185,22 +235,22 @@ public class UserControl extends MainControl {
 	}
 
 	/**
-	 * @return the users
+	 * @return the admins
 	 */
-	public List<User> getUsers() {
+	public List<Admin> getAdmins() {
 		EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
-		users = entityManager.createQuery("from User", User.class).getResultList();
+		admins = entityManager.createQuery("from Admin", Admin.class).getResultList();
         entityManager.getTransaction().commit();
         entityManager.close();
-		return users;
+		return admins;
 	}
 
 	/**
-	 * @param users the users to set
+	 * @param admins the admins to set
 	 */
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setAdmins(List<Admin> admins) {
+		this.admins = admins;
 	}
 
 	/**
@@ -220,6 +270,25 @@ public class UserControl extends MainControl {
 	 */
 	public void setManagers(List<Manager> managers) {
 		this.managers = managers;
+	}
+
+	/**
+	 * @return the employees
+	 */
+	public List<Employee> getEmployees() {
+		EntityManager entityManager = emf.createEntityManager();
+		entityManager.getTransaction().begin();
+		employees = entityManager.createQuery("from Employee", Employee.class).getResultList();
+        entityManager.getTransaction().commit();
+        entityManager.close();
+		return employees;
+	}
+
+	/**
+	 * @param employees the employees to set
+	 */
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
 	}
 
 	/**
@@ -293,5 +362,19 @@ public class UserControl extends MainControl {
 	 */
 	public void setSelectedManager(Manager selectedManager) {
 		this.selectedManager = selectedManager;
+	}
+
+	/**
+	 * @return the selectedUsers
+	 */
+	public User[] getSelectedUsers() {
+		return selectedUsers;
+	}
+
+	/**
+	 * @param selectedUsers the selectedUsers to set
+	 */
+	public void setSelectedUsers(User[] selectedUsers) {
+		this.selectedUsers = selectedUsers;
 	}
 }

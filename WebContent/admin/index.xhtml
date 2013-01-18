@@ -15,56 +15,159 @@
 				</p>
 				<h:form prependId="false">
 
-				    <p:dataTable id="dataTable" var="user" value="#{userControl.users}">
+				    <p:dataTable id="AdminDataTable" var="admin" value="#{userControl.admins}" rowKey="#{admin.id}" selection="#{userControl.selectedUsers}" selectionMode="multiple">
 				        <f:facet name="header">
-				            Users
+				            Admins
 				        </f:facet>
 
 				        <p:column>
 				            <f:facet name="header">
 				                <h:outputText value="Username" />
 				            </f:facet>
-				            <h:outputText value="#{user.username}" />
+				            <h:outputText value="#{admin.username}" />
 				        </p:column>
 
 				        <p:column>
 				            <f:facet name="header">
 				                <h:outputText value="First Name" />
 				            </f:facet>
-				            <h:outputText value="#{user.name}" />
+				            <h:outputText value="#{admin.name}" />
 				        </p:column>
 
 				        <p:column>
 				            <f:facet name="header">
 				                <h:outputText value="Last name" />
 				            </f:facet>
-				            <h:outputText value="#{user.surname}" />
+				            <h:outputText value="#{admin.surname}" />
 				        </p:column>
 
 				        <p:column>
 				            <f:facet name="header">
 				                <h:outputText value="Position" />
 				            </f:facet>
-				            <h:outputText value="#{user.position}" />
+				            <h:outputText value="#{admin.position}" />
 				        </p:column>
 
 				        <p:column>
 				            <f:facet name="header">
 				                <h:outputText value="Roles" />
 				            </f:facet>
-				            <h:outputText value="#{user.role.type}" />
+				            <h:outputText value="#{admin.role.type}" />
+				        </p:column>
+
+				        <f:facet name="footer">
+				        	<p:outputPanel id="AdminWrapper">
+								<p:messages id="AdminMessage"></p:messages>
+							</p:outputPanel>  
+            				<p:commandButton id="deleteAdminButton" value="Delete" action="#{userControl.deleteSelectedUsers()}" update="AdminWrapper, AdminDataTable"></p:commandButton>
+            				<p:commandButton id="editAdminButton" value="Edit" action="#{userControl.selectionControl()}" update="AdminWrapper, AdminDataTable"></p:commandButton>
+       					</f:facet>
+				    </p:dataTable>
+					<br /><br />
+				    <p:dataTable id="ManagerDataTable" var="manager" value="#{userControl.managers}" rowKey="#{manager.id}" selection="#{userControl.selectedUsers}" selectionMode="multiple">
+				        <f:facet name="header">
+				            Managers
+				        </f:facet>
+
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Username" />
+				            </f:facet>
+				            <h:outputText value="#{manager.username}" />
 				        </p:column>
 
 				        <p:column>
 				            <f:facet name="header">
-				                <h:outputText value="Action" />
+				                <h:outputText value="First Name" />
 				            </f:facet>
-				            <p:commandButton id="delete" actionListener="#{userControl.deleteUser()}" image="icon icon-delete" value="Delete">
-				            	<f:setPropertyActionListener target="#{userControl.selectedUser}" value="#{user}" for="delete" />
-				            </p:commandButton>
+				            <h:outputText value="#{manager.name}" />
 				        </p:column>
-				    </p:dataTable>
 
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Last name" />
+				            </f:facet>
+				            <h:outputText value="#{manager.surname}" />
+				        </p:column>
+
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Position" />
+				            </f:facet>
+				            <h:outputText value="#{manager.position}" />
+				        </p:column>
+
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Roles" />
+				            </f:facet>
+				            <h:outputText value="#{manager.role.type}" />
+				        </p:column>
+
+				        <f:facet name="footer">
+				        	<p:outputPanel id="ManagerWrapper">
+								<p:messages id="ManagerMessage"></p:messages>
+							</p:outputPanel>  
+            				<p:commandButton id="deleteManagerButton" value="Delete" action="#{userControl.deleteSelectedUsers()}" update="ManagerWrapper, ManagerDataTable"></p:commandButton>
+            				<p:commandButton id="editManagerButton" value="Edit" action="#{userControl.selectionControl()}" update="ManagerWrapper, ManagerDataTable"></p:commandButton>
+       					</f:facet>
+				    </p:dataTable>
+					<br /><br />
+				    <p:dataTable id="EmployeeDataTable" var="employee" value="#{userControl.employees}" rowKey="#{employee.id}" selection="#{userControl.selectedUsers}" selectionMode="multiple">
+				        <f:facet name="header">
+				            Employees
+				        </f:facet>
+
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Username" />
+				            </f:facet>
+				            <h:outputText value="#{employee.username}" />
+				        </p:column>
+
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="First Name" />
+				            </f:facet>
+				            <h:outputText value="#{employee.name}" />
+				        </p:column>
+
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Last name" />
+				            </f:facet>
+				            <h:outputText value="#{employee.surname}" />
+				        </p:column>
+
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Position" />
+				            </f:facet>
+				            <h:outputText value="#{employee.position}" />
+				        </p:column>
+
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Manager" />
+				            </f:facet>
+				            <h:outputText value="#{employee.manager.name} #{employee.manager.surname}" />
+				        </p:column>
+
+				        <p:column>
+				            <f:facet name="header">
+				                <h:outputText value="Roles" />
+				            </f:facet>
+				            <h:outputText value="#{employee.role.type}" />
+				        </p:column>
+
+				        <f:facet name="footer">
+				        	<p:outputPanel id="EmployeeWrapper">
+								<p:messages id="EmployeeMessage"></p:messages>
+							</p:outputPanel>  
+            				<p:commandButton id="deleteEmployeeButton" value="Delete" action="#{userControl.deleteSelectedUsers()}" update="EmployeeWrapper, EmployeeDataTable"></p:commandButton>
+            				<p:commandButton id="editEmployeeButton" value="Edit" action="#{userControl.selectionControl()}" update="EmployeeWrapper, EmployeeDataTable"></p:commandButton>
+       					</f:facet>
+				    </p:dataTable>
 				</h:form>
 			</ui:define>
 		</ui:composition>

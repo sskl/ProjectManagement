@@ -116,8 +116,6 @@ public class ProjectControl extends MainControl {
 	}
 	
 	public String editSelectedProject() {
-		
-			
 		FacesContext context = FacesContext.getCurrentInstance();
 		EntityManager entityManager = emf.createEntityManager();
 
