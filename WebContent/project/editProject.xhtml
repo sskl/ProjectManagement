@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<h:body>
+		<ui:composition template="../template/layout.xhtml">
+			<ui:define name="content">
+				<h:form id="editProjectForm">
+					<p:outputPanel id="wrapper">
+						<p:messages id="editProjectMessage"></p:messages>
+					</p:outputPanel>
+					<h:panelGrid columns="2">
+						<p:outputLabel id="nameLabel" for="name">Project Name</p:outputLabel>
+						<p:inputText id="name" value="#{projectControl.selectedProjects[0].name}" required="true"></p:inputText>
+
+						<p:outputLabel id="managerLabel" for="manager">Manager</p:outputLabel>
+						<p:selectOneMenu id="manager" value="#{projectControl.selectedProjects[0].manager}" converter="manager" effect="fade">
+					        <f:selectItems value="#{userControl.managers}" var="manager" itemLabel="#{manager.name} #{manager.surname}" itemValue="#{manager}"/>
+					    </p:selectOneMenu>
+					</h:panelGrid><br />
+					<p:commandButton id="editProjectButton" value="Save" action="#{projectControl.editSelectedProject()}" update="wrapper"></p:commandButton>
+				</h:form>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+</html>
