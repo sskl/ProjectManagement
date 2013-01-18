@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package tr.edu.ankara.blm489.controls;
@@ -27,12 +27,13 @@ public class UserControl extends MainControl {
 
 	private String username = "";
 	private User loggedUser = null;
-	private User selectedUser;
 	private Admin newAdmin = new Admin();
 	private Manager newManager = new Manager();
 	private Employee newEmployee = new Employee();
+	private Manager selectedManager = new Manager();
 	private List<User> users;
 	private List<Manager> managers;
+	private List<Employee> selectedTeam;
 
 	public String login() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -126,9 +127,8 @@ public class UserControl extends MainControl {
 		return "/admin/index.xhtml";
 	}
 
-	public String deleteUser() {
-		
-		return "";
+	public void updateSelectedTeam() {
+		System.out.println("Hi!");
 	}
 
 	public boolean isUserLogged() {
@@ -185,20 +185,6 @@ public class UserControl extends MainControl {
 	}
 
 	/**
-	 * @return the selectedUser
-	 */
-	public User getSelectedUser() {
-		return selectedUser;
-	}
-
-	/**
-	 * @param selectedUser the selectedUser to set
-	 */
-	public void setSelectedUser(User selectedUser) {
-		this.selectedUser = selectedUser;
-	}
-
-	/**
 	 * @return the users
 	 */
 	public List<User> getUsers() {
@@ -239,7 +225,7 @@ public class UserControl extends MainControl {
 	/**
 	 * @return the newAdmin
 	 */
-	public User getNewAdmin() {
+	public Admin getNewAdmin() {
 		return newAdmin;
 	}
 
@@ -281,4 +267,31 @@ public class UserControl extends MainControl {
 		this.newEmployee = newEmployee;
 	}
 
+	/**
+	 * @return the selectedTeam
+	 */
+	public List<Employee> getSelectedTeam() {
+		return selectedTeam;
+	}
+
+	/**
+	 * @param selectedTeam the selectedTeam to set
+	 */
+	public void setSelectedTeam(List<Employee> selectedTeam) {
+		this.selectedTeam = selectedTeam;
+	}
+
+	/**
+	 * @return the selectedManager
+	 */
+	public Manager getSelectedManager() {
+		return selectedManager;
+	}
+
+	/**
+	 * @param selectedManager the selectedManager to set
+	 */
+	public void setSelectedManager(Manager selectedManager) {
+		this.selectedManager = selectedManager;
+	}
 }
