@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<h:body>
+		<ui:composition template="../template/layout.xhtml">
+			<ui:define name="content">
+				<h:form id="editAdminForm">
+					<p:outputPanel id="wrapper">
+						<p:messages id="editAdminMessage" autoUpdate="true" closable="true"></p:messages>
+					</p:outputPanel>
+						<h:panelGrid columns="2">
+							<p:outputLabel id="usernameLabel" for="username">Username</p:outputLabel>
+							<p:inputText id="username" value="#{userControl.selectedAdmins[0].username}" required="true"></p:inputText>
+
+							<p:outputLabel id="nameLabel" for="name">First Name</p:outputLabel>
+							<p:inputText id="name" value="#{userControl.selectedAdmins[0].name}" required="true"></p:inputText>
+
+							<p:outputLabel id="surnameLable" for="surname">Last Name</p:outputLabel>
+							<p:inputText id="surname" value="#{userControl.selectedAdmins[0].surname}" required="true"></p:inputText>
+
+							<p:outputLabel id="positionLable" for="position">Position</p:outputLabel>
+							<p:inputText id="position" value="#{userControl.selectedAdmins[0].position}" required="true"></p:inputText>
+						</h:panelGrid><br />
+					<p:commandButton id="editAdminButton" value="Edit" action="#{userControl.editSelectedAdmin()}" update="wrapper"></p:commandButton>
+				</h:form>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+</html>

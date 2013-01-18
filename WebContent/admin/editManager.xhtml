@@ -8,24 +8,24 @@
 	<h:body>
 		<ui:composition template="../template/layout.xhtml">
 			<ui:define name="content">
-			<h:form id="addManagerForm">
+			<h:form id="editManagerForm">
 				<p:outputPanel id="wrapper">
-					<p:messages id="addManagerMessage" autoUpdate="true" closable="true"></p:messages>
+					<p:messages id="editManagerMessage" autoUpdate="true" closable="true"></p:messages>
 				</p:outputPanel>
 				<h:panelGrid columns="2" id="panel">
 					<p:outputLabel id="usernameLabel" for="username">Username</p:outputLabel>
-					<p:inputText id="username" value="#{userControl.newManager.username}" required="true"></p:inputText>
+					<p:inputText id="username" value="#{userControl.selectedManagers[0].username}" required="true"></p:inputText>
 
 					<p:outputLabel id="nameLabel" for="name">First Name</p:outputLabel>
-					<p:inputText id="name" value="#{userControl.newManager.name}" required="true"></p:inputText>
+					<p:inputText id="name" value="#{userControl.selectedManagers[0].name}" required="true"></p:inputText>
 
 					<p:outputLabel id="surnameLabel" for="surname">Last Name</p:outputLabel>
-					<p:inputText id="surname" value="#{userControl.newManager.surname}" required="true"></p:inputText>
+					<p:inputText id="surname" value="#{userControl.selectedManagers[0].surname}" required="true"></p:inputText>
 
 					<p:outputLabel id="positionLabel" for="position">Position</p:outputLabel>
-					<p:inputText id="position" value="#{userControl.newManager.position}" required="true"></p:inputText>
+					<p:inputText id="position" value="#{userControl.selectedManagers[0].position}" required="true"></p:inputText>
 				</h:panelGrid>
-				<p:commandButton id="addManagerButton" action="#{userControl.saveNewManager()}" value="Save" update="wrapper"></p:commandButton>
+				<p:commandButton id="editManagerButton" action="#{userControl.editSelectedManager()}" value="Edit" update="wrapper"></p:commandButton>
 			</h:form>
 			</ui:define>
 		</ui:composition>
