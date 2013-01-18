@@ -1,8 +1,18 @@
 .classpath
 .project
+.settings/*
+.metadata/*
+build/*
 .settings/**/*
 .metadata/**/*
 build/**/*
-.settings/**/*
-.metadata/**/*
-build/**/*
+Hibernate/**/*
+Hibernate/*
+JSF 2.0 (Apache Myfaces JSF Core-2.0 API 2.0.2)/**/*
+JSF 2.0 (Apache Myfaces JSF Core-2.0 API 2.0.2)/*
+MySQL/**/*
+MySQL/*
+Oracle/**/*
+Oracle/*
+PrimeFaces/**/*
+PrimeFaces/*
