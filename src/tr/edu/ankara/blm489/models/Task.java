@@ -3,6 +3,7 @@
  */
 package tr.edu.ankara.blm489.models;
 
+import java.beans.Transient;
 import java.util.Date;
 import java.util.List;
 
@@ -12,12 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
  * @author sskl
  *
  */
 @Entity
+@Table(name = "task")
 public class Task {
 
 	/**
@@ -49,6 +52,11 @@ public class Task {
 	 * Task employees
 	 */
 	private List<Employee> employees;
+	
+	/**
+	 * Task Mapping Id
+	 */
+	private String tmId = null;
 
 	/**
 	 * @return the id
@@ -138,6 +146,15 @@ public class Task {
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	@Transient
+	public String getTmId() {
+		return tmId;
+	}
+
+	public void setTmId(String tmId) {
+		this.tmId = tmId;
 	}
 
 }

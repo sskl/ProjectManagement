@@ -28,5 +28,11 @@
 		<managed-bean-class>tr.edu.ankara.blm489.controls.UserControl</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<description>Main Task Controller</description>
+		<managed-bean-name>taskControl</managed-bean-name>
+		<managed-bean-class>tr.edu.ankara.blm489.controls.TaskControl</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 
 </faces-config>
