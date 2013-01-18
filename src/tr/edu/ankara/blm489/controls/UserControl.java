@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package tr.edu.ankara.blm489.controls;
@@ -27,10 +27,10 @@ public class UserControl extends MainControl {
 
 	private String username = "";
 	private User loggedUser = null;
-	private User newAdmin = new Admin();
-	private Manager newManager;
-	private Manager selectedManager = new Manager();
+	private Admin newAdmin = new Admin();
+	private Manager newManager = new Manager();
 	private Employee newEmployee = new Employee();
+	private Manager selectedManager = new Manager();
 	private List<User> users;
 	private List<Manager> managers;
 	private List<Employee> selectedTeam;
@@ -126,7 +126,11 @@ public class UserControl extends MainControl {
 
 		return "/admin/index.xhtml";
 	}
-	
+
+	public void updateSelectedTeam() {
+		System.out.println("Hi!");
+	}
+
 	public boolean isUserLogged() {
 		if (loggedUser instanceof User)
 			return true;
@@ -158,8 +162,26 @@ public class UserControl extends MainControl {
 		return username;
 	}
 
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
+	 * 
+	 * @return the loggedUser
+	 */
 	public User getLoggedUser() {
 		return loggedUser;
+	}
+
+	/**
+	 * @param loggedUser the loggedUser to set
+	 */
+	public void setLoggedUser(User loggedUser) {
+		this.loggedUser = loggedUser;
 	}
 
 	/**
@@ -175,6 +197,13 @@ public class UserControl extends MainControl {
 	}
 
 	/**
+	 * @param users the users to set
+	 */
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
+	/**
 	 * @return the managers
 	 */
 	public List<Manager> getManagers() {
@@ -187,16 +216,23 @@ public class UserControl extends MainControl {
 	}
 
 	/**
+	 * @param managers the managers to set
+	 */
+	public void setManagers(List<Manager> managers) {
+		this.managers = managers;
+	}
+
+	/**
 	 * @return the newAdmin
 	 */
-	public User getNewAdmin() {
+	public Admin getNewAdmin() {
 		return newAdmin;
 	}
 
 	/**
 	 * @param newAdmin the newAdmin to set
 	 */
-	public void setNewAdmin(User newAdmin) {
+	public void setNewAdmin(Admin newAdmin) {
 		this.newAdmin = newAdmin;
 	}
 
@@ -232,50 +268,30 @@ public class UserControl extends MainControl {
 	}
 
 	/**
-	 * @param loggedUser the loggedUser to set
+	 * @return the selectedTeam
 	 */
-	public void setLoggedUser(User loggedUser) {
-		this.loggedUser = loggedUser;
-	}
-
-	/**
-	 * @param username the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	/**
-	 * @param users the users to set
-	 */
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
-
-	/**
-	 * @param managers the managers to set
-	 */
-	public void setManagers(List<Manager> managers) {
-		this.managers = managers;
-	}
-
 	public List<Employee> getSelectedTeam() {
 		return selectedTeam;
 	}
 
+	/**
+	 * @param selectedTeam the selectedTeam to set
+	 */
 	public void setSelectedTeam(List<Employee> selectedTeam) {
 		this.selectedTeam = selectedTeam;
 	}
-	public void updateSelectedTeam() {
-		System.out.println("Hi!");
-	}
 
+	/**
+	 * @return the selectedManager
+	 */
 	public Manager getSelectedManager() {
 		return selectedManager;
 	}
 
+	/**
+	 * @param selectedManager the selectedManager to set
+	 */
 	public void setSelectedManager(Manager selectedManager) {
 		this.selectedManager = selectedManager;
 	}
-
 }

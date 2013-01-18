@@ -8,9 +8,6 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
-
-import org.hibernate.Session;
-
 import tr.edu.ankara.blm489.models.Project;
 
 /**
