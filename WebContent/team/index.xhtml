@@ -1,39 +1,104 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-	<h:body>
-		<ui:composition template="../template/layout.xhtml">
-			<ui:define name="content">
-				<h:form prependId="false">
-				<p:selectOneMenu id="manager" value="#{userControl.selectedManager}" converter="manager" effect="fade">
-            		<f:selectItems value="#{userControl.managers}" var="manager" itemLabel="Team of #{manager.name} #{manager.surname}" itemValue="#{manager}"/> 
-        	    </p:selectOneMenu>
-        	    <p:commandButton id="showTeamButton" value="Show Team" action="#{userControl.updateSelectedTeam()}" update="dataTable"></p:commandButton>
-				   <p:dataTable id="dataTable" var="employee" value="#{userControl.selectedTeam}"  >
-				   <f:facet name="header">
-				            Team
-				        </f:facet>
-				        <p:column>
-				            <f:facet name="header">
-				                <h:outputText value="Team Name" />
-				            </f:facet>
-				            <h:outputText value="#{employee.name}" />
-				        </p:column>
-				        <!--  <f:facet name="footer">
-				        	<p:outputPanel id="wrapper">
-								<p:messages id="addProjectMessage"></p:messages>
-							</p:outputPanel>  
-            				<p:commandButton id="deleteProjectButton" value="Delete" action="#{projectControl.deleteSelectedProjects()}" update="wrapper,dataTable"></p:commandButton>
-            				<p:commandButton id="editProjectButton" value="Edit" action="#{projectControl.selectionControl()}" update="wrapper,dataTable"></p:commandButton>
-       					</f:facet> -->
-				   </p:dataTable>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="../template/layout.xhtml">
+		<ui:define name="content">
+			<h:form prependId="false">
 
-				</h:form>   
-			</ui:define>
-		</ui:composition>
-	</h:body>
+				<p:dataTable id="teamDataTable" var="team"
+					value="#{teamControl.teams}" rowKey="#{team.id}"
+					selection="#{teamControl.selectedTeams}" selectionMode="multiple">
+					<f:facet name="header">
+				            Teams
+				       </f:facet>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Team Name" />
+						</f:facet>
+						<h:outputText value="#{team.name}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Team Manager" />
+						</f:facet>
+						<h:outputText value="#{team.manager.name} #{team.manager.surname}" />
+					</p:column>
+
+					<p:column>
+						<p:dataTable id="teamMembersDataTable" var="employee"
+							value="#{team.employees}" rowKey="#{employee.id}"
+							selection="#{teamControl.selectedEmployees}" selectionMode="multiple">
+							<f:facet name="header">
+						            Members
+						    </f:facet>
+		
+							<p:column>
+					            <f:facet name="header">
+					                <h:outputText value="Username" />
+					            </f:facet>
+					            <h:outputText value="#{employee.username}" />
+					        </p:column>
+	
+					        <p:column>
+					            <f:facet name="header">
+					                <h:outputText value="First Name" />
+					            </f:facet>
+					            <h:outputText value="#{employee.name}" />
+					        </p:column>
+	
+					        <p:column>
+					            <f:facet name="header">
+					                <h:outputText value="Last name" />
+					            </f:facet>
+					            <h:outputText value="#{employee.surname}" />
+					        </p:column>
+	
+					        <p:column>
+					            <f:facet name="header">
+					                <h:outputText value="Position" />
+					            </f:facet>
+					            <h:outputText value="#{employee.position}" />
+					        </p:column>
+	
+					        <p:column>
+					            <f:facet name="header">
+					                <h:outputText value="Manager" />
+					            </f:facet>
+					            <h:outputText value="#{employee.manager.name} #{employee.manager.surname}" />
+					        </p:column>
+	
+					        <p:column>
+					            <f:facet name="header">
+					                <h:outputText value="Roles" />
+					            </f:facet>
+					            <h:outputText value="#{employee.role.type}" />
+					        </p:column>
+
+						</p:dataTable>
+					</p:column>
+
+					<f:facet name="footer">
+						<p:outputPanel id="teamWrapper">
+							<p:messages id="teamMessage"></p:messages>
+						</p:outputPanel>
+						<p:commandButton id="deleteTeamButton" value="Delete"
+							action="#{teamControl.deleteSelectedTeams()}"
+							update="teamWrapper, teamDataTable"></p:commandButton>
+						<p:commandButton id="editProjectButton" value="Edit"
+							action="#{teamControl.controlSelectedTeams()}"
+							update="teamWrapper, teamDataTable"></p:commandButton>
+					</f:facet>
+				</p:dataTable>
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
 </html>
