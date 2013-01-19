@@ -161,6 +161,7 @@ public class TaskControl extends MainControl {
 	}
     
 	private void deployTasks() {
+		eventModel.clear();
 		for (Task itr : tasks) {
 			ScheduleEvent event = new DefaultScheduleEvent(itr.getTaskBrief(), itr.getCreatedDate(), itr.getDeadLineDate());
 			eventModel.addEvent(event);
