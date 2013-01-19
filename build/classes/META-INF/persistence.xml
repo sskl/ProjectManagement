@@ -11,7 +11,7 @@
 		<class>tr.edu.ankara.blm489.models.Team</class>
 		<class>tr.edu.ankara.blm489.models.Role</class>
 		<properties>
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.hbm2ddl.auto" value="create" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
