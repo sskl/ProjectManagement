@@ -8,13 +8,14 @@
     <h:body>
     	<ui:composition template="../template/layout.xhtml">
 			<ui:define name="content">
-				<h:form>  
-				
+			<h:form>	
+				<p:selectOneMenu id="project" value="#{taskControl.owner}" converter="project" effect="fade">
+				            <f:selectItems value="#{projectControl.projects}" var="project" itemLabel="#{project.name}" itemValue="#{project}"/>
+				        </p:selectOneMenu>
+				        <p:commandButton id="showTasks" value="Show" action="#{taskControl.loadTasks()}" update="@form"></p:commandButton> 
 					<p:growl id="messages" showDetail="true" />
 					    
-					  	<p:selectOneMenu id="project" value="#{projectControl.selectedProject}" converter="project" effect="fade">
-					        <f:selectItems value="#{projectControl.projects}" var="project" itemLabel="#{project.name}" itemValue="#{project}"/>
-					    </p:selectOneMenu>
+
 					  
 					    <p:schedule value="#{taskControl.eventModel}" widgetVar="myschedule">  
 					  
@@ -28,7 +29,7 @@
 					    <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">  
 					        <h:panelGrid id="eventDetails" columns="2">  
 					            <h:outputLabel for="title" value="Title:" />  
-					            <p:inputText id="title" value="#{taskControl.event.title}" required="true"/>  
+					            <p:inputText id="title" value="#{taskControl.event.title}"/>  
 					  
 					            <h:outputLabel for="from" value="From:" />  
 					            <p:inputMask id="from" value="#{taskControl.event.startDate}" mask="99/99/9999">  
