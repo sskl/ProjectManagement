@@ -58,7 +58,13 @@ public class UserControl extends MainControl {
 		} else {
 			context.getExternalContext().getSessionMap().put("sessUser", loggedUser);
 	        try {
-				context.getExternalContext().redirect("project/index.xhtml");
+	        	String page = "";
+	        	if (loggedUser.getRole().getType().equals("Employee")) {
+	        		page = "task/index.xhtml";
+	        	} else {
+	        		page = "project/index.xhtml";
+	        	}
+	        	context.getExternalContext().redirect(page);
 			} catch (IOException e) {
 				System.out.println("Error redirecting.");
 			}

@@ -29,6 +29,7 @@ public class TeamControl extends MainControl {
 	private Team[] selectedTeams;
 	private Team newTeam = new Team();
 	private DualListModel<Employee> employees;
+	private DualListModel<Employee> teamEmployees;
 
 	public String saveNewTeam() {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -79,13 +80,14 @@ public class TeamControl extends MainControl {
 	        context.addMessage(null, message);
 	        return null;
 		}
-		return "/team/editTeam.xhtml"; 
+		return "/team/editTeam.xhtml";
 	}
 
 	public String editSelectedTeam() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		EntityManager entityManager = emf.createEntityManager();
 
+		selectedTeams[0].setEmployees(teamEmployees.getTarget());
 		try {
 			entityManager.getTransaction().begin();
 			Team merged = entityManager.merge(selectedTeams[0]);
@@ -95,6 +97,8 @@ public class TeamControl extends MainControl {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
 	        context.addMessage(null, message);
 	        return null;
+		} finally {
+	        entityManager.close();
 		}
 
 		return "/team/index.xhtml";
@@ -155,6 +159,34 @@ public class TeamControl extends MainControl {
 	 */
 	public void setEmployees(DualListModel<Employee> employees) {
 		this.employees = employees;
+	}
+
+	/**
+	 * @return the employees
+	 */
+	public DualListModel<Employee> getTeamEmployees() {
+		List<Employee> source; 
+          
+		FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        Manager user = (Manager) session.getAttribute("sessUser");
+
+		EntityManager entityManager = emf.createEntityManager();
+		entityManager.getTransaction().begin();
+		source = entityManager.createQuery("from Employee where managerId = " + user.getId(), Employee.class).getResultList();
+        entityManager.getTransaction().commit();
+        source.removeAll(selectedTeams[0].getEmployees());
+        teamEmployees = new DualListModel<Employee>(source, selectedTeams[0].getEmployees());
+        entityManager.close();
+
+		return teamEmployees;
+	}
+
+	/**
+	 * @param employees the employees to set
+	 */
+	public void setTeamEmployees(DualListModel<Employee> teamEmployees) {
+		this.teamEmployees = teamEmployees;
 	}
 
 	/**

@@ -19,32 +19,21 @@
 				        Teams
 				    </f:facet>
 
-					<p:subTable id="teamMembersDataTable" var="employee" value="#{team.employees}">
-						<f:facet name="header">
-					    	#{team.name}
-					    </f:facet>
-	
-						<p:column>
-				            #{employee.username}
-				        </p:column>
+			        <p:column>
+			            <f:facet name="header">
+			                <h:outputText value="Team Name" />
+			            </f:facet>
+			            <h:outputText value="#{team.name}" />
+			        </p:column>
 
-				        <p:column>
-				            #{employee.name}
-				        </p:column>
-
-				        <p:column>
-				            #{employee.surname}
-				        </p:column>
-
-				        <p:column>
-				            #{employee.position}
-				        </p:column>
-
-				        <p:column>
-				            #{employee.role.type}
-				        </p:column>
-
-					</p:subTable>
+			        <p:column>
+			            <f:facet name="header">
+			                <h:outputText value="Team Members" />
+			            </f:facet>
+			            <h:outputText>
+			            	<p:orderList value="#{team.employees}" var="employee" itemLabel="#{employee.name} #{employee.surname}" itemValue="#{employee}" id="memberList" controlsLocation="none" /> 
+			            </h:outputText>
+			        </p:column>
 
 					<f:facet name="footer">
 						<p:outputPanel id="teamWrapper">
@@ -53,7 +42,7 @@
 						<p:commandButton id="deleteTeamButton" value="Delete"
 							action="#{teamControl.deleteSelectedTeams()}"
 							update="teamWrapper, teamDataTable"></p:commandButton>
-						<p:commandButton id="editProjectButton" value="Edit"
+						<p:commandButton id="editTeamButton" value="Edit"
 							action="#{teamControl.controlSelectedTeams()}"
 							update="teamWrapper, teamDataTable"></p:commandButton>
 					</f:facet>

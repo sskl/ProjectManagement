@@ -55,7 +55,9 @@ public class MainFilter implements Filter {
 
         if (user != null && uri.endsWith("login.xhtml")) {
         	res.sendRedirect(req.getContextPath() +  "/project/index.xhtml");
-        } else {
+        }else if (user != null && uri.endsWith("logout.xhtml")) {
+        	chain.doFilter(request, response);
+		} else {
         	chain.doFilter(request, response);
         }
 	}

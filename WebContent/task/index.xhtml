@@ -47,7 +47,7 @@
 					  
 					  			<h:outputLabel for="team" value="Team:" />
 					  			<p:selectOneMenu id="team" value="#{taskControl.team}" converter="team" effect="fade">
-									<f:selectItems value="#{teamControl.teams}" var="team" itemLabel="#{team.id}" itemValue="#{team}"/>
+									<f:selectItems value="#{teamControl.teams}" var="team" itemLabel="#{team.name}" itemValue="#{team}"/>
 								</p:selectOneMenu>
 						
 					            <p:commandButton type="reset" value="Reset" disabled="#{!(userControl.userRoleManager || userControl.userRoleAdmin)}"/>

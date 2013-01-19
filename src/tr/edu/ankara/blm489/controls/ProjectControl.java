@@ -6,7 +6,13 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
+
+import tr.edu.ankara.blm489.models.Admin;
+import tr.edu.ankara.blm489.models.Employee;
+import tr.edu.ankara.blm489.models.Manager;
 import tr.edu.ankara.blm489.models.Project;
+import tr.edu.ankara.blm489.models.User;
 
 /**
  * @author sskl
@@ -14,9 +20,8 @@ import tr.edu.ankara.blm489.models.Project;
  */
 public class ProjectControl extends MainControl {
 
-	//private String projectName;
-	//private Manager manager;
 	private List<Project> projects;
+	private List<Manager> managers;
 	private Project newProject = new Project();
 	private Project[] selectedProjects;
 	private Project selectedProject;
@@ -25,11 +30,25 @@ public class ProjectControl extends MainControl {
 	 * @return the projects
 	 */
 	public List<Project> getProjects() {
-		EntityManager entityManager = emf.createEntityManager();
-		entityManager.getTransaction().begin();
-		projects = entityManager.createQuery("from Project", Project.class).getResultList();
-        entityManager.getTransaction().commit();
-        entityManager.close();
+		FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        User user =  (User)session.getAttribute("sessUser");
+
+        if (user instanceof Manager) {
+        	Manager m = (Manager) user;
+			EntityManager entityManager = emf.createEntityManager();
+			entityManager.getTransaction().begin();
+			projects = entityManager.createQuery("from Project where managerId = " + m.getId(), Project.class).getResultList();
+	        entityManager.getTransaction().commit();
+	        entityManager.close();
+        } else if (user instanceof Employee) {
+        	Employee e = (Employee) user;
+			EntityManager entityManager = emf.createEntityManager();
+			entityManager.getTransaction().begin();
+			projects = entityManager.createQuery("from Project where managerId = " + e.getManager().getId(), Project.class).getResultList();
+	        entityManager.getTransaction().commit();
+	        entityManager.close();
+        }
 		return projects;
 	}
 
@@ -139,5 +158,37 @@ public class ProjectControl extends MainControl {
 
 	public void setSelectedProject(Project selectedProject) {
 		this.selectedProject = selectedProject;
+	}
+
+	/**
+	 * @return the managers
+	 */
+	public List<Manager> getManagers() {
+		FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        User user =  (User)session.getAttribute("sessUser");
+
+        if (user instanceof Manager) {
+        	Manager m = (Manager) user;
+			EntityManager entityManager = emf.createEntityManager();
+			entityManager.getTransaction().begin();
+			managers = entityManager.createQuery("from Manager where id = " + m.getId(), Manager.class).getResultList();
+	        entityManager.getTransaction().commit();
+	        entityManager.close();
+        } else if (user instanceof Admin) {
+			EntityManager entityManager = emf.createEntityManager();
+			entityManager.getTransaction().begin();
+			managers = entityManager.createQuery("from Manager", Manager.class).getResultList();
+	        entityManager.getTransaction().commit();
+	        entityManager.close();
+		}
+		return managers;
+	}
+
+	/**
+	 * @param managers the managers to set
+	 */
+	public void setManagers(List<Manager> managers) {
+		this.managers = managers;
 	}
 }

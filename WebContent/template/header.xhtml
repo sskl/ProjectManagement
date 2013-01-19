@@ -13,7 +13,7 @@
 			    <p:menuitem value="Tasks" url="/task/index.xhtml" icon="ui-icon-document"  disabled="#{!(userControl.userRoleEmployee || userControl.userRoleManager)}" />
 			    <p:menuitem value="Teams" url="/team/index.xhtml" icon="ui-icon-person" disabled="#{!userControl.userRoleManager}" />
 			    <p:menuitem value="Users" url="/admin/index.xhtml" icon="ui-icon-person" disabled="#{!userControl.userRoleAdmin}" />
-			    <p:menuitem value="Logout" url="/admin/logout.xhtml" icon="ui-icon-person" />
+			    <p:menuitem value="Logout" url="/logout.xhtml" icon="ui-icon-person" />
 			</p:tabMenu>
 	    </ui:composition>
     </h:body>
