@@ -3,17 +3,15 @@
  */
 package tr.edu.ankara.blm489.models;
 
-import java.beans.Transient;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * @author sskl
@@ -51,7 +49,7 @@ public class Task {
 	/**
 	 * Task employees
 	 */
-	private List<Employee> employees;
+	private Team team;
 	
 	/**
 	 * Task Mapping Id
@@ -96,24 +94,6 @@ public class Task {
 	}
 
 	/**
-	 * @return the employee
-	 */
-	@ManyToMany(targetEntity=Employee.class)
-	@JoinTable(name = "Employee_Task",
-	           joinColumns = { @JoinColumn(name = "taskId") },
-	           inverseJoinColumns = { @JoinColumn(name = "employeeId") })
-	public List<Employee> getEmployees() {
-		return employees;
-	}
-
-	/**
-	 * @param employees the employees to set
-	 */
-	public void setEmployees(List<Employee> employees) {
-		this.employees = employees;
-	}
-
-	/**
 	 * @param deadLineDate the deadLineDate to set
 	 */
 	public void setDeadLineDate(Date deadLineDate) {
@@ -146,6 +126,22 @@ public class Task {
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the team
+	 */
+	@ManyToOne(targetEntity=Team.class)
+	@JoinColumn(name="teamId")
+	public Team getTeam() {
+		return team;
+	}
+
+	/**
+	 * @param team the team to set
+	 */
+	public void setTeam(Team team) {
+		this.team = team;
 	}
 
 	@Transient
