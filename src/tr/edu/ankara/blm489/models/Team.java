@@ -28,6 +28,11 @@ public class Team {
 	private int id;
 
 	/**
+	 * Team name
+	 */
+	private String name;
+
+	/**
 	 * Team members
 	 */
 	private List<Employee> employees;
@@ -85,5 +90,19 @@ public class Team {
 	 */
 	public void setManager(Manager manager) {
 		this.manager = manager;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 }
