@@ -10,6 +10,11 @@
 		<converter-id>manager</converter-id>
 		<converter-class>tr.edu.ankara.blm489.converters.ManagerConverter</converter-class>
 	</converter>
+	<converter>
+		<display-name>project</display-name>
+		<converter-id>project</converter-id>
+		<converter-class>tr.edu.ankara.blm489.converters.ProjectConverter</converter-class>
+	</converter>
 	<managed-bean>
 		<description>Main Controller</description>
 		<managed-bean-name>mainControl</managed-bean-name>

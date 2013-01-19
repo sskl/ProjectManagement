@@ -20,7 +20,8 @@ public class ProjectControl extends MainControl {
 	//private Manager manager;
 	private List<Project> projects;
 	private Project newProject = new Project();
-	private Project[] selectedProjects; 
+	private Project[] selectedProjects;
+	private Project selectedProject;
 
 	/**
 	 * @return the projects
@@ -132,5 +133,13 @@ public class ProjectControl extends MainControl {
 		}
 
 		return "/project/index.xhtml";
+	}
+
+	public Project getSelectedProject() {
+		return selectedProject;
+	}
+
+	public void setSelectedProject(Project selectedProject) {
+		this.selectedProject = selectedProject;
 	}
 }
