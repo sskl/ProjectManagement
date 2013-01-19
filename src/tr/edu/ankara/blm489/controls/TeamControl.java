@@ -28,8 +28,8 @@ public class TeamControl extends MainControl {
 	 */
 	public List<Team> getTeams() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		HttpSession httpSession = (HttpSession) context.getExternalContext().getSession(true);
-        Manager user = (Manager) httpSession.getAttribute("sessUser");
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        Manager user = (Manager) session.getAttribute("sessUser");
 
 		EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();

@@ -11,6 +11,10 @@
 				<h:form>  
 				
 					<p:growl id="messages" showDetail="true" />
+					    
+					  	<p:selectOneMenu id="project" value="#{projectControl.selectedProject}" converter="project" effect="fade">
+					        <f:selectItems value="#{projectControl.projects}" var="project" itemLabel="#{project.name}" itemValue="#{project}"/>
+					    </p:selectOneMenu>
 					  
 					    <p:schedule value="#{taskControl.eventModel}" widgetVar="myschedule">  
 					  

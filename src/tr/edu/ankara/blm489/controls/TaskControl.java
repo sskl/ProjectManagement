@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
@@ -15,12 +16,12 @@ import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.ScheduleEntrySelectEvent;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
+import tr.edu.ankara.blm489.models.Project;
 import tr.edu.ankara.blm489.models.Task;
 
 public class TaskControl extends MainControl {
@@ -29,17 +30,23 @@ public class TaskControl extends MainControl {
 	
 	private String firstDateOfSelectedRange;
 	private String lastDateOfSelectedRange;
+	private String projectCriteria;
 	
-	private ScheduleModel eventModel;   
+	private ScheduleModel eventModel;
+	
+	@ManagedProperty(value="#{projectControl}")
+    private ProjectControl projectControl;
   
     private ScheduleEvent event = new DefaultScheduleEvent();   
   
-    public TaskControl() {  
+    public TaskControl() {
+    	List<Project> projects = projectControl.getProjects();
+    	projectCriteria = projects.get(0).getName();
     	setRangeValues();
         eventModel = new DefaultScheduleModel();
         EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
-		tasks = entityManager.createQuery("from Task where createdDate >= '" + firstDateOfSelectedRange + "' AND createdDate <= '" + lastDateOfSelectedRange + "'", Task.class).getResultList();
+		tasks = entityManager.createQuery("from Task where createdDate >= '" + firstDateOfSelectedRange + "' AND createdDate <= '" + lastDateOfSelectedRange + "' AND ownerproject = '" + projectCriteria +"'", Task.class).getResultList();
         entityManager.getTransaction().commit();
         entityManager.close();
         deployTasks();
@@ -69,6 +76,7 @@ public class TaskControl extends MainControl {
 
 		try {
 			entityManager.getTransaction().begin();
+			tmpTask = entityManager.merge(tmpTask);
 			entityManager.persist(tmpTask);
 	        entityManager.getTransaction().commit();	
 		} catch (Exception e) {
@@ -92,13 +100,17 @@ public class TaskControl extends MainControl {
       
     public void onEventMove(ScheduleEntryMoveEvent event) {  
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event moved", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());  
-          
+        this.event = event.getScheduleEvent();
+        addEvent(null); 
         addMessage(message);  
     }  
       
     public void onEventResize(ScheduleEntryResizeEvent event) {  
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());  
-          
+        
+        this.event = event.getScheduleEvent();
+        addEvent(null);   
+        
         addMessage(message);  
     }  
       
@@ -162,5 +174,39 @@ public class TaskControl extends MainControl {
 			itr.setTmId(event.getId());
 		}
 	}
+
+	public String getProjectCriteria() {
+		return projectCriteria;
+	}
+
+	public void setProjectCriteria(String projectCriteria) {
+		this.projectCriteria = projectCriteria;
+	}
+
+	public String getFirstDateOfSelectedRange() {
+		return firstDateOfSelectedRange;
+	}
+
+	public void setFirstDateOfSelectedRange(String firstDateOfSelectedRange) {
+		this.firstDateOfSelectedRange = firstDateOfSelectedRange;
+	}
+
+	public String getLastDateOfSelectedRange() {
+		return lastDateOfSelectedRange;
+	}
+
+	public void setLastDateOfSelectedRange(String lastDateOfSelectedRange) {
+		this.lastDateOfSelectedRange = lastDateOfSelectedRange;
+	}
+
+	public ProjectControl getProjectControl() {
+		return projectControl;
+	}
+
+	public void setProjectControl(ProjectControl projectControl) {
+		this.projectControl = projectControl;
+	}
+	
+	
       
 }
