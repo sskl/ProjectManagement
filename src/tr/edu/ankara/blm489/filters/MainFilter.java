@@ -49,8 +49,10 @@ public class MainFilter implements Filter {
         	MainControl.setActivePage(0);
         if (uri.contains("task"))
         	MainControl.setActivePage(1);
-        if (uri.contains("admin"))
+        if (uri.contains("team"))
         	MainControl.setActivePage(2);
+        if (uri.contains("admin"))
+        	MainControl.setActivePage(3);
         
         if (user != null && uri.endsWith("login.xhtml")) {
         	res.sendRedirect(req.getContextPath() +  "/project/index.xhtml");

@@ -13,6 +13,7 @@
 			    <p:menuitem value="Tasks" url="/task/index.xhtml" icon="ui-icon-document"  rendered="#{userControl.userRoleEmployee || userControl.userRoleManager}" />
 			    <p:menuitem value="Teams" url="/team/index.xhtml" icon="ui-icon-person" rendered="#{userControl.userRoleManager}" />
 			    <p:menuitem value="Users" url="/admin/index.xhtml" icon="ui-icon-person" rendered="#{userControl.userRoleAdmin}" />
+			    <p:menuitem value="Logout" url="/admin/logout.xhtml" icon="ui-icon-person" />
 			</p:tabMenu>
 	    </ui:composition>
     </h:body>

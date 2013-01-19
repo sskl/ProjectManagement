@@ -3,11 +3,13 @@
  */
 package tr.edu.ankara.blm489.controls;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -59,7 +61,18 @@ public class UserControl extends MainControl {
 			return "project/index.xhtml";
 		}
 	}
-	
+
+	public void logout() {
+		FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        session.invalidate();
+        try {
+			context.getExternalContext().redirect("admin/logout.xhtml");
+		} catch (IOException e) {
+			System.out.println("Eror redirecting.");
+		}
+	}
+
 	public String saveNewAdmin() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		Role role = new Role();
