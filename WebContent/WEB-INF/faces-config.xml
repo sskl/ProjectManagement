@@ -15,6 +15,11 @@
 		<converter-id>project</converter-id>
 		<converter-class>tr.edu.ankara.blm489.converters.ProjectConverter</converter-class>
 	</converter>
+	<converter>
+		<display-name>team</display-name>
+		<converter-id>team</converter-id>
+		<converter-class>tr.edu.ankara.blm489.converters.TeamConverter</converter-class>
+	</converter>
 	<managed-bean>
 		<description>Main Controller</description>
 		<managed-bean-name>mainControl</managed-bean-name>

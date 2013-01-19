@@ -105,4 +105,25 @@ public class Team {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	@Override
+	public String toString() {
+		return String.valueOf(id);
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (!(obj instanceof Team)) 
+        	return false;
+
+        if (this.getId() == ((Team)obj).getId()) {
+            return true;
+        } else {
+            return false;
+        }
+	}
 }

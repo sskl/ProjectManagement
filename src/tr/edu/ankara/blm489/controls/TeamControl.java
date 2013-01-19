@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import tr.edu.ankara.blm489.models.Employee;
 import tr.edu.ankara.blm489.models.Manager;
 import tr.edu.ankara.blm489.models.Team;
+import tr.edu.ankara.blm489.models.User;
 
 /**
  * @author sskl
@@ -31,13 +32,22 @@ public class TeamControl extends MainControl {
 	public List<Team> getTeams() {
 		FacesContext context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-        Manager user = (Manager) session.getAttribute("sessUser");
-
-		EntityManager entityManager = emf.createEntityManager();
-		entityManager.getTransaction().begin();
-		teams = entityManager.createQuery("from Team where managerId = " + user.getId(), Team.class).getResultList();
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        
+        User user =  (User)session.getAttribute("sessUser");
+        if (user instanceof Manager) {
+        	Manager m = (Manager) user;
+			EntityManager entityManager = emf.createEntityManager();
+			entityManager.getTransaction().begin();
+			teams = entityManager.createQuery("from Team where managerId = " + m.getId(), Team.class).getResultList();
+	        entityManager.getTransaction().commit();
+	        entityManager.close();
+        } else {
+        	EntityManager entityManager = emf.createEntityManager();
+			entityManager.getTransaction().begin();
+			teams = entityManager.createQuery("from Team", Team.class).getResultList();
+	        entityManager.getTransaction().commit();
+	        entityManager.close();
+        }
 
 		return teams;
 	}

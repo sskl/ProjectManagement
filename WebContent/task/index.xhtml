@@ -8,11 +8,15 @@
     <h:body>
     	<ui:composition template="../template/layout.xhtml">
 			<ui:define name="content">
-			<h:form>	
-				<p:selectOneMenu id="project" value="#{taskControl.owner}" converter="project" effect="fade">
-				            <f:selectItems value="#{projectControl.projects}" var="project" itemLabel="#{project.name}" itemValue="#{project}"/>
-				        </p:selectOneMenu>
-				        <p:commandButton id="showTasks" value="Show" action="#{taskControl.loadTasks()}" update="@form"></p:commandButton> 
+				<h:form>
+					<h:panelGrid columns="3" border="0">
+						<h:outputText for="project" value="Project : " />  
+						<p:selectOneMenu id="project" value="#{taskControl.owner}" converter="project" effect="fade">
+							<f:selectItems value="#{projectControl.projects}" var="project" itemLabel="#{project.name}" itemValue="#{project}"/>
+						</p:selectOneMenu>
+					    <p:commandButton id="showTasks" value="Show" action="#{taskControl.loadTasks()}" update="@form"></p:commandButton> 
+				    </h:panelGrid>
+				    <p:spacer height="10" />	
 					<p:growl id="messages" showDetail="true" />
 					    
 
@@ -39,13 +43,16 @@
 					            <h:outputLabel for="to" value="To:" />  
 					            <p:inputMask id="to" value="#{taskControl.event.endDate}" mask="99/99/9999">  
 					                <f:convertDateTime pattern="dd/MM/yyyy" />  
-					            </p:inputMask>  
+					            </p:inputMask>    
 					  
-					            <h:outputLabel for="allDay" value="All Day:" />  
-					            <h:selectBooleanCheckbox id="allDay" value="#{taskControl.event.allDay}" />  
-					  
-					            <p:commandButton type="reset" value="Reset" />  
-					            <p:commandButton value="Save" actionListener="#{taskControl.addEvent}" oncomplete="myschedule.update();eventDialog.hide();"/>  
+					  			<h:outputLabel for="team" value="Team:" />
+					  			<p:selectOneMenu id="team" value="#{taskControl.team}" converter="team" effect="fade">
+									<f:selectItems value="#{teamControl.teams}" var="team" itemLabel="#{team.id}" itemValue="#{team}"/>
+								</p:selectOneMenu>
+						
+					            <p:commandButton type="reset" value="Reset" disabled="#{!(userControl.userRoleManager || userControl.userRoleAdmin)}"/>
+					            <p:commandButton id="delete" value="Delete" action="#{taskControl.deleteTask()}" update="@form" disabled="#{!(userControl.userRoleManager || userControl.userRoleAdmin)}"></p:commandButton>  
+					            <p:commandButton value="Save" actionListener="#{taskControl.addEvent}" oncomplete="myschedule.update();eventDialog.hide();" disabled="#{!(userControl.userRoleManager || userControl.userRoleAdmin)}"/>  
 					        </h:panelGrid>  
 					    </p:dialog>   
   
