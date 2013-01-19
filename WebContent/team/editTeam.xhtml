@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<h:body>
+		<ui:composition template="../template/layout.xhtml">
+			<ui:define name="content">
+				<h:form id="editTeamForm">
+					<p:outputPanel id="teamWrapper">
+						<p:messages id="addTeamMessage" autoUpdate="true" closable="true"></p:messages>
+					</p:outputPanel>
+					<h:panelGrid columns="2">
+						<p:outputLabel id="nameLabel" for="name">Team Name</p:outputLabel>
+						<p:inputText id="name" value="#{teamControl.selectedTeams[0].name}" required="true"></p:inputText>
+
+						<p:outputLabel id="membersLabel">Team Members</p:outputLabel>
+						<p:pickList id="pickList" value="#{teamControl.teamEmployees}" var="employee" itemLabel="#{employee.name} #{employee.surname}" itemValue="#{employee}" converter="employee" />  
+					</h:panelGrid><br />
+					<p:commandButton id="editTeamButton" value="Edit" action="#{teamControl.editSelectedTeam()}" update="teamWrapper"></p:commandButton>
+				</h:form>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+</html>
