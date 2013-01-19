@@ -53,7 +53,7 @@ public class MainFilter implements Filter {
         	MainControl.setActivePage(2);
         if (uri.contains("admin"))
         	MainControl.setActivePage(3);
-        
+
         if (user != null && uri.endsWith("login.xhtml")) {
         	res.sendRedirect(req.getContextPath() +  "/project/index.xhtml");
         } else {
