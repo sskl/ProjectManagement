@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 
+import tr.edu.ankara.blm489.models.Employee;
 import tr.edu.ankara.blm489.models.Manager;
 import tr.edu.ankara.blm489.models.Team;
 
@@ -20,6 +21,7 @@ import tr.edu.ankara.blm489.models.Team;
 public class TeamControl extends MainControl {
 
 	private List<Team> teams;
+	private List<Employee> employees;
 	private Team[] selectedTeams;
 	private Team newTeam = new Team();
 
@@ -114,6 +116,30 @@ public class TeamControl extends MainControl {
 	 */
 	public void setTeams(List<Team> teams) {
 		this.teams = teams;
+	}
+
+	/**
+	 * @return the employees
+	 */
+	public List<Employee> getEmployees() {
+		FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        Manager user = (Manager) session.getAttribute("sessUser");
+
+		EntityManager entityManager = emf.createEntityManager();
+		entityManager.getTransaction().begin();
+		employees = entityManager.createQuery("from User where managerId = " + user.getId(), Employee.class).getResultList();
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+		return employees;
+	}
+
+	/**
+	 * @param employees the employees to set
+	 */
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
 	}
 
 	/**

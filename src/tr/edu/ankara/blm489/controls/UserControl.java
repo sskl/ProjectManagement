@@ -71,7 +71,8 @@ public class UserControl extends MainControl {
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.persist(newAdmin);
-	        entityManager.getTransaction().commit();	
+	        entityManager.getTransaction().commit();
+	        newAdmin = new Admin();
 		} catch (Exception e) {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
 	        context.addMessage(null, message);
@@ -95,7 +96,8 @@ public class UserControl extends MainControl {
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.persist(newManager);
-	        entityManager.getTransaction().commit();	
+	        entityManager.getTransaction().commit();
+	        newManager = new Manager();
 		} catch (Exception e) {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
 	        context.addMessage(null, message);
@@ -118,7 +120,8 @@ public class UserControl extends MainControl {
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.persist(newEmployee);
-	        entityManager.getTransaction().commit();	
+	        entityManager.getTransaction().commit();
+	        newEmployee = new Employee();
 		} catch (Exception e) {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
 	        context.addMessage(null, message);
