@@ -17,6 +17,7 @@ import org.primefaces.model.DualListModel;
 import tr.edu.ankara.blm489.models.Employee;
 import tr.edu.ankara.blm489.models.Manager;
 import tr.edu.ankara.blm489.models.Team;
+import tr.edu.ankara.blm489.models.User;
 
 /**
  * @author sskl
@@ -105,18 +106,20 @@ public class TeamControl extends MainControl {
 	public List<Team> getTeams() {
 		FacesContext context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-        Manager user = (Manager) session.getAttribute("sessUser");
+        User user =  (User)session.getAttribute("sessUser");
 
-		EntityManager entityManager = emf.createEntityManager();
-		entityManager.getTransaction().begin();
-		teams = entityManager.createQuery("from Team where managerId = " + user.getId(), Team.class).getResultList();
-		for (Team team : teams) {
-			Hibernate.initialize(team.getEmployees());
-		}
-        entityManager.getTransaction().commit();
-        entityManager.close();
-
-		return teams;
+        if (user instanceof Manager) {
+        	Manager m = (Manager) user;
+        	EntityManager entityManager = emf.createEntityManager();
+        	entityManager.getTransaction().begin();
+        	teams = entityManager.createQuery("from Team where managerId = " + m.getId(), Team.class).getResultList();
+        	for (Team team : teams) {
+        		Hibernate.initialize(team.getEmployees());
+        	}
+        	entityManager.getTransaction().commit();
+        	entityManager.close();
+        }
+    	return teams;
 	}
 
 	/**

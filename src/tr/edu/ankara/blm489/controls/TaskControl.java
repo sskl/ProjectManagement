@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
@@ -24,6 +23,7 @@ import org.primefaces.model.ScheduleModel;
 import tr.edu.ankara.blm489.models.Manager;
 import tr.edu.ankara.blm489.models.Project;
 import tr.edu.ankara.blm489.models.Task;
+import tr.edu.ankara.blm489.models.Team;
 
 public class TaskControl extends MainControl {
 	
@@ -37,6 +37,7 @@ public class TaskControl extends MainControl {
 	
 	private Project owner = new Project();
 	private Manager man = new Manager();
+	private Team team = new Team();
   
     private ScheduleEvent event = new DefaultScheduleEvent();   
   
@@ -62,6 +63,8 @@ public class TaskControl extends MainControl {
         tmpTask.setTaskBrief(event.getTitle());
         tmpTask.setCreatedDate(event.getStartDate());
         tmpTask.setDeadLineDate(event.getEndDate());
+        tmpTask.setOwnerProject(owner);
+        tmpTask.setTeam(team);
         
         FacesContext context = FacesContext.getCurrentInstance();
 		
@@ -84,7 +87,7 @@ public class TaskControl extends MainControl {
     }  
       
     public void onEventSelect(ScheduleEntrySelectEvent selectEvent) {  
-        event = selectEvent.getScheduleEvent();  
+        event = selectEvent.getScheduleEvent();
     }  
       
     public void onDateSelect(DateSelectEvent selectEvent) {  
@@ -161,6 +164,7 @@ public class TaskControl extends MainControl {
 	}
     
 	private void deployTasks() {
+		eventModel.clear();
 		for (Task itr : tasks) {
 			ScheduleEvent event = new DefaultScheduleEvent(itr.getTaskBrief(), itr.getCreatedDate(), itr.getDeadLineDate());
 			eventModel.addEvent(event);
@@ -204,7 +208,8 @@ public class TaskControl extends MainControl {
     	projectCriteria = String.valueOf(owner.getId());
         EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
-		tasks = entityManager.createQuery("from Task where createdDate >= '" + firstDateOfSelectedRange + "' AND createdDate <= '" + lastDateOfSelectedRange + "' AND projectId = '" + projectCriteria +"'", Task.class).getResultList();
+		tasks = entityManager.createQuery("from Task where projectId = '" + projectCriteria +"'", Task.class).getResultList();
+		//tasks = entityManager.createQuery("from Task where createdDate >= '" + firstDateOfSelectedRange + "' AND createdDate <= '" + lastDateOfSelectedRange + "' AND projectId = '" + projectCriteria +"'", Task.class).getResultList();
         entityManager.getTransaction().commit();
         entityManager.close();
         deployTasks();
@@ -217,7 +222,41 @@ public class TaskControl extends MainControl {
 	public void setMan(Manager man) {
 		this.man = man;
 	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
+	}
 	
+	public void deleteTask() {
+		Task tmpTask;
+
+        tmpTask = getTaskByTMId(event.getId());
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+		
+        EntityManager entityManager = emf.createEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+			tmpTask = entityManager.merge(tmpTask);
+			entityManager.remove(tmpTask);
+	        entityManager.getTransaction().commit();	
+		} catch (Exception e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
+	        context.addMessage(null, message);
+	        return;
+		} finally {
+			entityManager.close();
+		}
+		
+		eventModel.deleteEvent(event);
+        
+        event = new DefaultScheduleEvent();
+	}
 	
       
 }
