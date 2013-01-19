@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package tr.edu.ankara.blm489.controls;
 
 import java.util.List;

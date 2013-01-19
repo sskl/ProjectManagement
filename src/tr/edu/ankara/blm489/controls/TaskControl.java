@@ -21,6 +21,7 @@ import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
+import tr.edu.ankara.blm489.models.Manager;
 import tr.edu.ankara.blm489.models.Project;
 import tr.edu.ankara.blm489.models.Task;
 
@@ -34,22 +35,14 @@ public class TaskControl extends MainControl {
 	
 	private ScheduleModel eventModel;
 	
-	@ManagedProperty(value="#{projectControl}")
-    private ProjectControl projectControl;
+	private Project owner = new Project();
+	private Manager man = new Manager();
   
     private ScheduleEvent event = new DefaultScheduleEvent();   
   
     public TaskControl() {
-    	List<Project> projects = projectControl.getProjects();
-    	projectCriteria = projects.get(0).getName();
     	setRangeValues();
         eventModel = new DefaultScheduleModel();
-        EntityManager entityManager = emf.createEntityManager();
-		entityManager.getTransaction().begin();
-		tasks = entityManager.createQuery("from Task where createdDate >= '" + firstDateOfSelectedRange + "' AND createdDate <= '" + lastDateOfSelectedRange + "' AND ownerproject = '" + projectCriteria +"'", Task.class).getResultList();
-        entityManager.getTransaction().commit();
-        entityManager.close();
-        deployTasks();
     }  
       
     public void addEvent(ActionEvent actionEvent) { 
@@ -199,12 +192,30 @@ public class TaskControl extends MainControl {
 		this.lastDateOfSelectedRange = lastDateOfSelectedRange;
 	}
 
-	public ProjectControl getProjectControl() {
-		return projectControl;
+	public Project getOwner() {
+		return owner;
 	}
 
-	public void setProjectControl(ProjectControl projectControl) {
-		this.projectControl = projectControl;
+	public void setOwner(Project owner) {
+		this.owner = owner;
+	}
+	
+	public void loadTasks() {
+    	projectCriteria = String.valueOf(owner.getId());
+        EntityManager entityManager = emf.createEntityManager();
+		entityManager.getTransaction().begin();
+		tasks = entityManager.createQuery("from Task where createdDate >= '" + firstDateOfSelectedRange + "' AND createdDate <= '" + lastDateOfSelectedRange + "' AND projectId = '" + projectCriteria +"'", Task.class).getResultList();
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        deployTasks();
+	}
+
+	public Manager getMan() {
+		return man;
+	}
+
+	public void setMan(Manager man) {
+		this.man = man;
 	}
 	
 	

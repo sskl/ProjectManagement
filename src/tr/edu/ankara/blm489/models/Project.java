@@ -60,5 +60,27 @@ public class Project {
 	public void setManager(Manager manager) {
 		this.manager = manager;
 	}
+	@Override
+	public String toString() {
+		return String.valueOf(id);
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (!(obj instanceof Project)) 
+        	return false;
+
+        if (this.getId() == ((Project)obj).getId()) {
+            return true;
+        } else {
+            return false;
+        }
+	}
+	
+	
 	
 }
