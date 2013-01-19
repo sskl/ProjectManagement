@@ -39,5 +39,10 @@
 		<managed-bean-class>tr.edu.ankara.blm489.controls.TaskControl</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>teamControl</managed-bean-name>
+		<managed-bean-class>tr.edu.ankara.blm489.controls.TeamControl</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 
 </faces-config>

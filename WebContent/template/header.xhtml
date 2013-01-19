@@ -9,9 +9,10 @@
 		<ui:composition>
 			<h2>Project Management System</h2>
 			<p:tabMenu activeIndex="#{mainControl.activePage}" rendered="#{userControl.userLogged}">
-			    <p:menuitem value="Project" url="/project/index.xhtml" icon="ui-icon-star" rendered="#{userControl.userRoleManager || userControl.userRoleAdmin}"/>
-			    <p:menuitem value="Task" url="/task/index.xhtml" icon="ui-icon-document"/>
-			    <p:menuitem value="Admin" url="/admin/index.xhtml" icon="ui-icon-person" rendered="#{userControl.userRoleAdmin}" />
+			    <p:menuitem value="Projects" url="/project/index.xhtml" icon="ui-icon-star" rendered="#{userControl.userRoleManager || userControl.userRoleAdmin}" />
+			    <p:menuitem value="Tasks" url="/task/index.xhtml" icon="ui-icon-document"  rendered="#{userControl.userRoleEmployee || userControl.userRoleManager}" />
+			    <p:menuitem value="Teams" url="/team/index.xhtml" icon="ui-icon-person" rendered="#{userControl.userRoleManager}" />
+			    <p:menuitem value="Users" url="/admin/index.xhtml" icon="ui-icon-person" rendered="#{userControl.userRoleAdmin}" />
 			</p:tabMenu>
 	    </ui:composition>
     </h:body>

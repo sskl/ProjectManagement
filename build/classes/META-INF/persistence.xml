@@ -8,6 +8,7 @@
 		<class>tr.edu.ankara.blm489.models.Admin</class>
 		<class>tr.edu.ankara.blm489.models.Project</class>
 		<class>tr.edu.ankara.blm489.models.Task</class>
+		<class>tr.edu.ankara.blm489.models.Team</class>
 		<class>tr.edu.ankara.blm489.models.Role</class>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />
