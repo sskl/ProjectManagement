@@ -9,80 +9,42 @@
 	<ui:composition template="../template/layout.xhtml">
 		<ui:define name="content">
 			<h:form prependId="false">
-
+				<p>
+					<p:button value="Add Team" href="/team/addTeam.xhtml"></p:button>
+				</p>
 				<p:dataTable id="teamDataTable" var="team"
 					value="#{teamControl.teams}" rowKey="#{team.id}"
 					selection="#{teamControl.selectedTeams}" selectionMode="multiple">
 					<f:facet name="header">
-				            Teams
-				       </f:facet>
+				        Teams
+				    </f:facet>
 
-					<p:column>
+					<p:subTable id="teamMembersDataTable" var="employee" value="#{team.employees}">
 						<f:facet name="header">
-							<h:outputText value="Team Name" />
-						</f:facet>
-						<h:outputText value="#{team.name}" />
-					</p:column>
+					    	#{team.name}
+					    </f:facet>
+	
+						<p:column>
+				            #{employee.username}
+				        </p:column>
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Team Manager" />
-						</f:facet>
-						<h:outputText value="#{team.manager.name} #{team.manager.surname}" />
-					</p:column>
+				        <p:column>
+				            #{employee.name}
+				        </p:column>
 
-					<p:column>
-						<p:dataTable id="teamMembersDataTable" var="employee"
-							value="#{team.employees}" rowKey="#{employee.id}"
-							selection="#{teamControl.selectedEmployees}" selectionMode="multiple">
-							<f:facet name="header">
-						            Members
-						    </f:facet>
-		
-							<p:column>
-					            <f:facet name="header">
-					                <h:outputText value="Username" />
-					            </f:facet>
-					            <h:outputText value="#{employee.username}" />
-					        </p:column>
-	
-					        <p:column>
-					            <f:facet name="header">
-					                <h:outputText value="First Name" />
-					            </f:facet>
-					            <h:outputText value="#{employee.name}" />
-					        </p:column>
-	
-					        <p:column>
-					            <f:facet name="header">
-					                <h:outputText value="Last name" />
-					            </f:facet>
-					            <h:outputText value="#{employee.surname}" />
-					        </p:column>
-	
-					        <p:column>
-					            <f:facet name="header">
-					                <h:outputText value="Position" />
-					            </f:facet>
-					            <h:outputText value="#{employee.position}" />
-					        </p:column>
-	
-					        <p:column>
-					            <f:facet name="header">
-					                <h:outputText value="Manager" />
-					            </f:facet>
-					            <h:outputText value="#{employee.manager.name} #{employee.manager.surname}" />
-					        </p:column>
-	
-					        <p:column>
-					            <f:facet name="header">
-					                <h:outputText value="Roles" />
-					            </f:facet>
-					            <h:outputText value="#{employee.role.type}" />
-					        </p:column>
+				        <p:column>
+				            #{employee.surname}
+				        </p:column>
 
-						</p:dataTable>
-					</p:column>
+				        <p:column>
+				            #{employee.position}
+				        </p:column>
+
+				        <p:column>
+				            #{employee.role.type}
+				        </p:column>
+
+					</p:subTable>
 
 					<f:facet name="footer">
 						<p:outputPanel id="teamWrapper">

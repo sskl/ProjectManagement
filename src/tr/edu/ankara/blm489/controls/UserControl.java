@@ -41,7 +41,7 @@ public class UserControl extends MainControl {
 	private Manager[] selectedManagers;
 	private Employee[] selectedEmployees;
 
-	public String login() {
+	public void login() {
         FacesContext context = FacesContext.getCurrentInstance();
 		EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
@@ -55,10 +55,13 @@ public class UserControl extends MainControl {
 		if ( loggedUser == null ) {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid username. Please enter valid username.", "");
 	        context.addMessage(null, message);
-			return null;
 		} else {
 			context.getExternalContext().getSessionMap().put("sessUser", loggedUser);
-			return "project/index.xhtml";
+	        try {
+				context.getExternalContext().redirect("project/index.xhtml");
+			} catch (IOException e) {
+				System.out.println("Error redirecting.");
+			}
 		}
 	}
 
@@ -69,7 +72,7 @@ public class UserControl extends MainControl {
         try {
 			context.getExternalContext().redirect("admin/logout.xhtml");
 		} catch (IOException e) {
-			System.out.println("Eror redirecting.");
+			System.out.println("Error redirecting.");
 		}
 	}
 
@@ -213,7 +216,6 @@ public class UserControl extends MainControl {
 	        context.addMessage(null, message);
 	        return null;
 		}
-		System.out.println(selectedAdmins.length);
 		return "/admin/editAdmin.xhtml"; 
 	}
 	

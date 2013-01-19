@@ -11,6 +11,11 @@
 		<converter-class>tr.edu.ankara.blm489.converters.ManagerConverter</converter-class>
 	</converter>
 	<converter>
+		<display-name>employee</display-name>
+		<converter-id>employee</converter-id>
+		<converter-class>tr.edu.ankara.blm489.converters.EmployeeConverter</converter-class>
+	</converter>
+	<converter>
 		<display-name>project</display-name>
 		<converter-id>project</converter-id>
 		<converter-class>tr.edu.ankara.blm489.converters.ProjectConverter</converter-class>

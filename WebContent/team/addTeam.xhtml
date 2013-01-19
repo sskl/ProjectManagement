@@ -14,9 +14,10 @@
 					</p:outputPanel>
 					<h:panelGrid columns="2">
 						<p:outputLabel id="nameLabel" for="name">Team Name</p:outputLabel>
-						<p:inputText id="name" value="#{userControl.selectedEmployees[0].username}" required="true"></p:inputText>
+						<p:inputText id="name" value="#{teamControl.newTeam.name}" required="true"></p:inputText>
 
-						 <p:pickList id="pickList" value="#{teamControl.employees}" var="employee" itemLabel="#{employee.name} #{employee.surname}" itemValue="#{employee}" />  
+						<p:outputLabel id="membersLabel">Team Members</p:outputLabel>
+						<p:pickList id="pickList" value="#{teamControl.employees}" var="employee" itemLabel="#{employee.name} #{employee.surname}" itemValue="#{employee}" converter="employee" />  
 					</h:panelGrid><br />
 					<p:commandButton id="saveTeamButton" value="Save" action="#{teamControl.saveNewTeam()}" update="teamWrapper"></p:commandButton>
 				</h:form>

@@ -7,7 +7,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,7 +16,6 @@ import tr.edu.ankara.blm489.models.User;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-@WebFilter(description = "Control is User logged in.", urlPatterns = { "/project/*" })
 public class LoginFilter implements Filter {
 
     /**

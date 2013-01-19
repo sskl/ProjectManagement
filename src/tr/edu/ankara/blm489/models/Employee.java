@@ -33,4 +33,19 @@ public class Employee extends User {
 	public void setManager(Manager manager) {
 		this.manager = manager;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (!(obj instanceof Employee)) return false;
+
+        if (this.getId() == ((Employee)obj).getId()) {
+            return true;
+        } else {
+            return false;
+        }
+	}
 }

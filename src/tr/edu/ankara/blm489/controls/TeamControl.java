@@ -3,12 +3,16 @@
  */
 package tr.edu.ankara.blm489.controls;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
+
+import org.hibernate.Hibernate;
+import org.primefaces.model.DualListModel;
 
 import tr.edu.ankara.blm489.models.Employee;
 import tr.edu.ankara.blm489.models.Manager;
@@ -21,35 +25,23 @@ import tr.edu.ankara.blm489.models.Team;
 public class TeamControl extends MainControl {
 
 	private List<Team> teams;
-	private List<Employee> employees;
 	private Team[] selectedTeams;
 	private Team newTeam = new Team();
-
-	/**
-	 * @return the teams
-	 */
-	public List<Team> getTeams() {
-		FacesContext context = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-        Manager user = (Manager) session.getAttribute("sessUser");
-
-		EntityManager entityManager = emf.createEntityManager();
-		entityManager.getTransaction().begin();
-		teams = entityManager.createQuery("from Team where managerId = " + user.getId(), Team.class).getResultList();
-        entityManager.getTransaction().commit();
-        entityManager.close();
-
-		return teams;
-	}
+	private DualListModel<Employee> employees;
 
 	public String saveNewTeam() {
 		FacesContext context = FacesContext.getCurrentInstance();
-
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        Manager user = (Manager) session.getAttribute("sessUser");
 		EntityManager entityManager = emf.createEntityManager();
+		
+	    newTeam.setEmployees(employees.getTarget());
+	    newTeam.setManager(user);
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.persist(newTeam);
-	        entityManager.getTransaction().commit();	
+	        entityManager.getTransaction().commit();
+	        newTeam = new Team();
 		} catch (Exception e) {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
 	        context.addMessage(null, message);
@@ -57,10 +49,8 @@ public class TeamControl extends MainControl {
 		} finally {
 	        entityManager.close();
 		}
-
-		return "/team/index.xhtml";
+        return "/team/index.xhtml";
 	}
-
 
 	public String deleteSelectedTeams() {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -78,18 +68,16 @@ public class TeamControl extends MainControl {
 	        context.addMessage(null, message);
 	        return null;
 		}
-
-		return "/admin/index.xhtml";
+		return "/team/index.xhtml";
 	}
 	
-	public String controlSelectedAdmins() {
+	public String controlSelectedTeams() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		if (selectedTeams.length > 1) {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please select only one row to edit!", "");
 	        context.addMessage(null, message);
 	        return null;
 		}
-		System.out.println(selectedTeams.length);
 		return "/team/editTeam.xhtml"; 
 	}
 
@@ -112,6 +100,26 @@ public class TeamControl extends MainControl {
 	}
 
 	/**
+	 * @return the teams
+	 */
+	public List<Team> getTeams() {
+		FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        Manager user = (Manager) session.getAttribute("sessUser");
+
+		EntityManager entityManager = emf.createEntityManager();
+		entityManager.getTransaction().begin();
+		teams = entityManager.createQuery("from Team where managerId = " + user.getId(), Team.class).getResultList();
+		for (Team team : teams) {
+			Hibernate.initialize(team.getEmployees());
+		}
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+		return teams;
+	}
+
+	/**
 	 * @param teams the teams to set
 	 */
 	public void setTeams(List<Team> teams) {
@@ -121,15 +129,19 @@ public class TeamControl extends MainControl {
 	/**
 	 * @return the employees
 	 */
-	public List<Employee> getEmployees() {
+	public DualListModel<Employee> getEmployees() {
+		List<Employee> source;  
+        List<Employee> target = new ArrayList<Employee>();  
+          
 		FacesContext context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
         Manager user = (Manager) session.getAttribute("sessUser");
 
 		EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
-		employees = entityManager.createQuery("from User where managerId = " + user.getId(), Employee.class).getResultList();
+		source = entityManager.createQuery("from Employee where managerId = " + user.getId(), Employee.class).getResultList();
         entityManager.getTransaction().commit();
+        employees = new DualListModel<Employee>(source, target);
         entityManager.close();
 
 		return employees;
@@ -138,7 +150,7 @@ public class TeamControl extends MainControl {
 	/**
 	 * @param employees the employees to set
 	 */
-	public void setEmployees(List<Employee> employees) {
+	public void setEmployees(DualListModel<Employee> employees) {
 		this.employees = employees;
 	}
 
