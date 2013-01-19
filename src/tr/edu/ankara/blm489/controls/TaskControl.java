@@ -46,7 +46,7 @@ public class TaskControl extends MainControl {
         eventModel = new DefaultScheduleModel();
         EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
-		tasks = entityManager.createQuery("from Task where createdDate >= '" + firstDateOfSelectedRange + "' AND createdDate <= '" + lastDateOfSelectedRange + "'", Task.class).getResultList();
+		tasks = entityManager.createQuery("from Task where createdDate >= '" + firstDateOfSelectedRange + "' AND createdDate <= '" + lastDateOfSelectedRange + "' AND ownerproject = '" + projectCriteria +"'", Task.class).getResultList();
         entityManager.getTransaction().commit();
         entityManager.close();
         deployTasks();
